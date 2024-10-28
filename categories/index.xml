@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>czTang</title>
+    <link>https://czTangt.github.io/blog/categories/</link>
+    <description>Recent content on czTang</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>cz.Tangt@gmail.com (czTang)</managingEditor>
+    <webMaster>cz.Tangt@gmail.com (czTang)</webMaster>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="https://czTangt.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
