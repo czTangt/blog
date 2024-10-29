@@ -1,3 +1,0 @@
-http://localhost:1313/blog/about/
-http://localhost:1313/blog/posts/b12471f/
-http://localhost:1313/blog/categories/staticanalysis/staticanalysis/
