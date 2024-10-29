@@ -1,14 +1,11 @@
 # Static
 
 
-&#43;&#43;&#43;
-categories = [&#39;staticAnalysis&#39;]
-&#43;&#43;&#43;
 博客（英语：Blog）是一种在线日记型式的个人网站，借由张帖子章、图片或视频来记录生活、抒发情感或分享信息。博客上的文章通常根据张贴时间，以倒序方式由新到旧排列。
 
 
 ---
 
 > 作者:   
-> URL: https://czTangt.github.io/blog/categories/staticanalysis/staticanalysis/  
+> URL: http://localhost:1313/blog/categories/staticanalysis/staticanalysis/  
 
