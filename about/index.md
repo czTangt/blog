@@ -1,10 +1,6 @@
 # About
 
 
-&lt;!-- {{&lt; admonition info &gt;}}
-- 一个菜狗
-{{&lt; /admonition &gt;}} --&gt;
-
 # 关于我
 - 在系统/软件安全领域学习的菜狗
 - 有趣的事情总能吸引我，然后忘记正事
