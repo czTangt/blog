@@ -194,5 +194,5 @@ $$
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
-> URL: http://localhost:1313/blog/categories/compile/lexer-re-automata/  
+> URL: https://czTangt.github.io/blog/categories/compile/lexer-re-automata/  
 
