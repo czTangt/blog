@@ -20,7 +20,15 @@
 ![修改配置文件](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101122906.png &#34;20241101122906&#34;)
 
 
+## GitHub 提交记录贪吃蛇动画
 
+参照[GitHub 提交记录贪食蛇动画](https://shuiwang.online/posts/github-contribution-grid-snake/)进行配置，不过我将 Github Action 写在了同名仓库中了，这样就少创建了一个仓库，其他都是按照参考文章所述的进行配置即可。插一嘴，本来想把 github-metrics.svg 单独放在一个分支中，但是不熟悉自动化部署脚本，配置了一会儿发现总是部署失败，所以直接使用[GitHub 个人主页美化教程](https://www.peterjxl.com/Git/GitHub-Profile-Beautify/#%E5%A6%82%E4%BD%95%E5%AE%9A%E5%88%B6)来进行配置了。
+
+## 补充
+
+### 网站图标
+
+对于网站图标实在是束手无策，一开始采用[官网配置](https://fixit.lruihao.cn/zh-cn/documentation/getting-started/configuration/#favicon-%e7%94%9f%e6%88%90)，但是给的利用网站不能生成符合要求的一系列文件，同时把生成文件都放在`/static`目录下，最后会把这些文件生成在`/public`根目录下，很不喜，所以放弃了这种方法。后来尝试和 `author` 的 `avatar` 属性配置一样，把 svg 图片放在`images`目录下，但是展示不出来。最后看到[别人文章](https://www.haoyep.com/posts/optimize-github-pages-blog-access-speed/#%e7%bd%91%e7%ab%99%e5%9b%be%e6%a0%87)，发现直接使用图床的图片可以生成，所以我现在也是利用这样的方式展示网站图标。
 
 ---
 
