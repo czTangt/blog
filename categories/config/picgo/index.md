@@ -19,8 +19,13 @@
 
 ![本地格式](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241031232237.png &#34;20241031232237&#34;)
 
-这里就是上传文件的格式，随便设置即可，因为不会有太多的格式要求，这里就是默认的配置。
+`Custom Upload Format`就是上传文件的格式，随便设置即可，因为不会有太多的格式要求，这里就是默认的配置。
 ![上传格式](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241031232303.png &#34;20241031232303&#34;)
+
+## 保存路径
+
+这里有一个 `Data Path`，vscode 插件会把每次的提交形成 `json` 数据添加到这个文件中，所以可以设置存储路径，之后查看图片可以迅速找到相关信息。这里我也将路径设置为博客的仓库，使其作为附属信息上传到 github 上。
+![20241101101253](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101101253.png &#34;20241101101253&#34;)
 
 ---
 
