@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Debugging Refresher - czTang</title><meta name="author" content="czTang">
+<meta name="description" content="pwn.college 中 Debugging Refresher 的解题方法记录。
+"><meta name="keywords" content='pwn'>
+  <meta itemprop="name" content="Debugging Refresher">
+  <meta itemprop="description" content="pwn.college 中 Debugging Refresher 的解题方法记录。">
+  <meta itemprop="datePublished" content="2024-11-01T23:09:28+08:00">
+  <meta itemprop="dateModified" content="2024-11-01T23:09:28+08:00">
+  <meta itemprop="wordCount" content="276">
+  <meta itemprop="keywords" content="Pwn"><meta property="og:url" content="http://localhost:1313/blog/categories/pwn/debugging-refresher/">
+  <meta property="og:site_name" content="czTang">
+  <meta property="og:title" content="Debugging Refresher">
+  <meta property="og:description" content="pwn.college 中 Debugging Refresher 的解题方法记录。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="categories">
+    <meta property="article:published_time" content="2024-11-01T23:09:28+08:00">
+    <meta property="article:modified_time" content="2024-11-01T23:09:28+08:00">
+    <meta property="article:tag" content="Pwn">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Debugging Refresher">
+  <meta name="twitter:description" content="pwn.college 中 Debugging Refresher 的解题方法记录。">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410312135963.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/blog/categories/pwn/debugging-refresher/" title="Debugging Refresher - czTang" /><link rel="prev" type="text/html" href="http://localhost:1313/blog/categories/pwn/assembly-crash-course/" title="Assembly Crash Course" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/blog/categories/pwn/debugging-refresher/index.md" title="Debugging Refresher - czTang"><link rel="stylesheet" href="/blog/css/style.min.css"><link rel="preload" href="/blog/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/blog/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Debugging Refresher",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/blog\/categories\/pwn\/debugging-refresher\/"
+    },"genre": "posts","keywords": "pwn","wordcount":  276 ,
+    "url": "http:\/\/localhost:1313\/blog\/categories\/pwn\/debugging-refresher\/","datePublished": "2024-11-01T23:09:28+08:00","dateModified": "2024-11-01T23:09:28+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "czTang"
+      },"description": ""
+  }
+  </script><script src="/blog/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="left">
+    <div class="header-title">
+      <a href="/blog/" title="czTang"><span class="header-title-pre"><i class='fa fa-coffee'>&nbsp</i></span><span class="header-title-text">czTang</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/archives/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/categories/"
+                
+                
+              ><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/about/"
+                
+                
+              ><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/blog/" title="czTang"><span class="header-title-pre"><i class='fa fa-coffee'>&nbsp</i></span><span class="header-title-text">czTang</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/archives/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/categories/"
+                  
+                  
+                ><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/about/"
+                  
+                  
+                ><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"><div class="details collection-details encrypted-hidden open">
+      <div class="details-summary collection-summary">
+        <i class="fa-solid fa-layer-group fa-fw" aria-hidden="true"></i>
+        <span class="collection-name" data-collections="合集">Pwn</span>
+        <span class="collection-count">4</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></div>
+      <div class="details-content collection-content">
+        <nav>
+          <ul class="collection-list"><li class="collection-item"><a href="/blog/categories/pwn/program-interaction/" title="Program Interaction">Program Interaction</a></li><li class="collection-item"><a href="/blog/categories/pwn/program-misuse/" title="Program Misuse">Program Misuse</a></li><li class="collection-item"><a href="/blog/categories/pwn/assembly-crash-course/" title="Assembly Crash Course">Assembly Crash Course</a></li><li class="collection-item"><span class="active" title="Debugging Refresher">Debugging Refresher</span></li></ul>
+          <div class="collection-nav-simple"><a href="/blog/categories/pwn/assembly-crash-course/" class="collection-nav-item" rel="prev" title="Assembly Crash Course"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i></a><span class="text-secondary">4/4</span><i class="fa-solid fa-angle-right fa-fw collection-nav-item text-secondary" aria-hidden="true"></i></div>
+        </nav>
+      </div>
+    </div></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Debugging Refresher</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://github.com/czTangt" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="/blog/images/avatar.jpg" alt="czTang" data-title="czTang" width="20" height="20" class="avatar" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;czTang</a></span><span class="post-included-in">&nbsp;收录于 <a href="/blog/categories/pwn/" class="post-category" title="分类 - Pwn"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Pwn</a> 和 <a href="/blog/collections/pwn/" class="post-collection" title="合集 - Pwn"><i class="fa-solid fa-layer-group fa-fw" aria-hidden="true"></i> Pwn</a></span></div><div class="post-meta-line"><span title="发布于 2024-11-01 23:09:28"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024.11.1">2024.11.1</time></span>&nbsp;<span title="276 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc encrypted-hidden" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#level-3">level 3</a></li>
+    <li><a href="#level-4">level 4</a></li>
+    <li><a href="#level-5">level 5</a></li>
+    <li><a href="#level-6">level 6</a>
+      <ul>
+        <li><a href="#wp1">wp1</a></li>
+        <li><a href="#wp2">wp2</a></li>
+      </ul>
+    </li>
+    <li><a href="#level-7">level 7</a></li>
+    <li><a href="#level-8">level 8</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"></div><fixit-encryptor>
+    <div class="fixit-decryptor-container">
+      <img class="fixit-decryptor-loading" src="/blog/images/loading.min.svg" alt="decryptor loading" width="48" height="48" />
+      <label for="fixit-decryptor-input" title="密码">
+        <input type="password" id="fixit-decryptor-input" class="fixit-decryptor-input" placeholder="🔑 请输入密码" />
+      </label>
+      <button class="fixit-decryptor-btn"><i class="fa-solid fa-unlock" aria-hidden="true"></i> 进入</button><button class="fixit-encryptor-btn"><i class="fa-solid fa-lock" aria-hidden="true"></i> 重新加密</button></div><cipher-text data-password="2b12d854a8aaea34">PHAf3d118bcd6f56105b722639793e20212f5d24abc099286625fc72a24f3c9b&#43;cHduLmNvbGxlZ2Ug5LitIERlYnVnZ2luZyBSZWZyZXNoZXIg55qE6Kej6aKY5pa55rOV6K6w5b2V44CCPC9wPgo8YmxvY2txdW90ZT4KPHA&#43;6L&#43;Z6YeM5bCx5piv5a&#43;55LqOZ2Ri55qE5L2/55So5pa55rOV6K&#43;05piO77yM5YW35L2T57uG6IqC55yL6YCG5ZCR5oqA5ben6YKj56&#43;H5Y2a5a6iPC9wPgo8L2Jsb2NrcXVvdGU&#43;CjxoMiBpZD0ibGV2ZWwtMyIgY2xhc3M9ImhlYWRpbmctZWxlbWVudCI&#43;PHNwYW4&#43;bGV2ZWwgMzwvc3Bhbj4NCiAgPGEgaHJlZj0iI2xldmVsLTMiIGNsYXNzPSJoZWFkaW5nLW1hcmsiPg0KICAgIDxzdmcgY2xhc3M9Im9jdGljb24gb2N0aWNvbi1saW5rIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PHBhdGggZD0ibTcuNzc1IDMuMjc1IDEuMjUtMS4yNWEzLjUgMy41IDAgMSAxIDQuOTUgNC45NWwtMi41IDIuNWEzLjUgMy41IDAgMCAxLTQuOTUgMCAuNzUxLjc1MSAwIDAgMSAuMDE4LTEuMDQyLjc1MS43NTEgMCAwIDEgMS4wNDItLjAxOCAxLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMi41LTIuNWEyLjAwMiAyLjAwMiAwIDAgMC0yLjgzLTIuODNsLTEuMjUgMS4yNWEuNzUxLjc1MSAwIDAgMS0xLjA0Mi0uMDE4Ljc1MS43NTEgMCAwIDEtLjAxOC0xLjA0MlptLTQuNjkgOS42NGExLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMS4yNS0xLjI1YS43NTEuNzUxIDAgMCAxIDEuMDQyLjAxOC43NTEuNzUxIDAgMCAxIC4wMTggMS4wNDJsLTEuMjUgMS4yNWEzLjUgMy41IDAgMSAxLTQuOTUtNC45NWwyLjUtMi41YTMuNSAzLjUgMCAwIDEgNC45NSAwIC43NTEuNzUxIDAgMCAxLS4wMTggMS4wNDIuNzUxLjc1MSAwIDAgMS0xLjA0Mi4wMTggMS45OTggMS45OTggMCAwIDAtMi44MyAwbC0yLjUgMi41YTEuOTk4IDEuOTk4IDAgMCAwIDAgMi44M1oiPjwvcGF0aD48L3N2Zz4NCiAgPC9hPg0KPC9oMj48cD7mkJ7muIXmpZogcmVhZCDnmoTosIPnlKjlj4LmlbDvvIzov5nph4zlsLHmmK/lr7vmib4gPGNvZGU&#43;W3JicC0weDE4XTwvY29kZT4g55qE5L2N572u5bCx5piv6ZqP5py65pWw55qE5a2Y5YKo5L2N572u44CCPC9wPgo8ZGl2IGNsYXNzPSJoaWdobGlnaHQiPjxkaXYgY2xhc3M9ImNocm9tYSI&#43;Cjx0YWJsZSBjbGFzcz0ibG50YWJsZSI&#43;PHRyPjx0ZCBjbGFzcz0ibG50ZCI&#43;CjxwcmUgdGFiaW5kZXg9IjAiIGNsYXNzPSJjaHJvbWEiPjxjb2RlPjxzcGFuIGNsYXNzPSJsbnQiPjEKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjIKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjMKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjQKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjUKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjYKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjcKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjgKPC9zcGFuPjwvY29kZT48L3ByZT48L3RkPgo8dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZSBjbGFzcz0ibGFuZ3VhZ2UtZmFsbGJhY2siIGRhdGEtbGFuZz0iZmFsbGJhY2siPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPiMgcmVhZCgwLGJ1ZixzaXplKQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPiMgICAgICByZGkscnNpLHJkeAo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU1ZDc0NTBkNmM0MiAmbHQ7KzQxMiZndDs6ICAgbW92ICAgIGVjeCxlYXgKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NWQ3NDUwZDZjNDQgJmx0Oys0MTQmZ3Q7OiAgIGxlYSAgICByYXgsW3JicC0weDE4XSAjIOi/memHjOWwseaYr&#43;WtmOWCqOedgOmaj&#43;acuuaVsOeahOS9jee9ru&#43;8jAo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU1ZDc0NTBkNmM0OCAmbHQ7KzQxOCZndDs6ICAgbW92ICAgIGVkeCwweDgKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NWQ3NDUwZDZjNGQgJmx0Oys0MjMmZ3Q7OiAgIG1vdiAgICByc2kscmF4ICPlj4jlsIbmlbDlgLzkvKDovpPnu5lyc2nlj4LmlbDvvIzor4Hlrp7kuobov5nph4zmmK/kuK3pl7TnmoRidWYKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NWQ3NDUwZDZjNTAgJmx0Oys0MjYmZ3Q7OiAgIG1vdiAgICBlZGksZWN4Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTVkNzQ1MGQ2YzUyICZsdDsrNDI4Jmd0OzogICBjYWxsICAgMHg1NWQ3NDUwZDYyMTAgJmx0O3JlYWRAcGx0Jmd0Ozwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvdGQ&#43;PC90cj48L3RhYmxlPgo8L2Rpdj4KPC9kaXY&#43;PGgyIGlkPSJsZXZlbC00IiBjbGFzcz0iaGVhZGluZy1lbGVtZW50Ij48c3Bhbj5sZXZlbCA0PC9zcGFuPg0KICA8YSBocmVmPSIjbGV2ZWwtNCIgY2xhc3M9ImhlYWRpbmctbWFyayI&#43;DQogICAgPHN2ZyBjbGFzcz0ib2N0aWNvbiBvY3RpY29uLWxpbmsiIHZpZXdCb3g9IjAgMCAxNiAxNiIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBkPSJtNy43NzUgMy4yNzUgMS4yNS0xLjI1YTMuNSAzLjUgMCAxIDEgNC45NSA0Ljk1bC0yLjUgMi41YTMuNSAzLjUgMCAwIDEtNC45NSAwIC43NTEuNzUxIDAgMCAxIC4wMTgtMS4wNDIuNzUxLjc1MSAwIDAgMSAxLjA0Mi0uMDE4IDEuOTk4IDEuOTk4IDAgMCAwIDIuODMgMGwyLjUtMi41YTIuMDAyIDIuMDAyIDAgMCAwLTIuODMtMi44M2wtMS4yNSAxLjI1YS43NTEuNzUxIDAgMCAxLTEuMDQyLS4wMTguNzUxLjc1MSAwIDAgMS0uMDE4LTEuMDQyWm0tNC42OSA5LjY0YTEuOTk4IDEuOTk4IDAgMCAwIDIuODMgMGwxLjI1LTEuMjVhLjc1MS43NTEgMCAwIDEgMS4wNDIuMDE4Ljc1MS43NTEgMCAwIDEgLjAxOCAxLjA0MmwtMS4yNSAxLjI1YTMuNSAzLjUgMCAxIDEtNC45NS00Ljk1bDIuNS0yLjVhMy41IDMuNSAwIDAgMSA0Ljk1IDAgLjc1MS43NTEgMCAwIDEtLjAxOCAxLjA0Mi43NTEuNzUxIDAgMCAxLTEuMDQyLjAxOCAxLjk5OCAxLjk5OCAwIDAgMC0yLjgzIDBsLTIuNSAyLjVhMS45OTggMS45OTggMCAwIDAgMCAyLjgzWiI&#43;PC9wYXRoPjwvc3ZnPg0KICA8L2E&#43;DQo8L2gyPjxwPui/memHjOWwseaYr&#43;afpeeci21haW7lh73mlbDnmoTmsYfnvJbku6PnoIHvvIznhLblkI7mlq3ngrnkuIvlnKggPGNvZGU&#43;cmVhZDwvY29kZT4g5Ye95pWw5aSE77yM5L2/55SoIDxjb2RlPm5pPC9jb2RlPiDmraXov4flh73mlbDvvIznhLblkI7kvb/nlKggPGNvZGU&#43;eC8xNnhnICRyc3A8L2NvZGU&#43;IOafpeeci&#43;WghuagiO&#43;8jOiOt&#43;W&#43;l&#43;maj&#43;acuuaVsOWQjuWGjeasoeW&#43;queOr&#43;&#43;8jOaAu&#43;WFsemcgOimgSA0IOasoeOAgjwvcD4KPGRpdiBjbGFzcz0iaGlnaGxpZ2h0Ij48ZGl2IGNsYXNzPSJjaHJvbWEiPgo8dGFibGUgY2xhc3M9ImxudGFibGUiPjx0cj48dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZT48c3BhbiBjbGFzcz0ibG50Ij4xCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4yCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4zCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij40Cjwvc3Bhbj48L2NvZGU&#43;PC9wcmU&#43;PC90ZD4KPHRkIGNsYXNzPSJsbnRkIj4KPHByZSB0YWJpbmRleD0iMCIgY2xhc3M9ImNocm9tYSI&#43;PGNvZGUgY2xhc3M9Imxhbmd1YWdlLWZhbGxiYWNrIiBkYXRhLWxhbmc9ImZhbGxiYWNrIj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDdmZmU2NzIzMTZiMDogMHgwMDAwMDAwMDAwMDAwMDAyICAgICAgMHgwMDAwN2ZmZTY3MjMxN2Y4Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHg3ZmZlNjcyMzE2YzA6IDB4MDAwMDdmZmU2NzIzMTdlOCAgICAgIDB4MDAwMDAwMDFlNTFlNGQ2MAo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4N2ZmZTY3MjMxNmQwOiAweDAwMDAwMDAwMDAwMDAwMDAgICAgICAweGVkZmY4MTdhNTI3ZDA5Nzcj6L&#43;Z5LiqMHhlZGZmODE3YTUyN2QwOTc35bCx5piv6ZqP5py65pWwCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHg3ZmZlNjcyMzE2ZTA6IDB4MDAwMDdmZmU2NzIzMTdlMCAgICAgIDB4NTRhMzUzYzhlN2ZkNTQwMDwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvdGQ&#43;PC90cj48L3RhYmxlPgo8L2Rpdj4KPC9kaXY&#43;PGgyIGlkPSJsZXZlbC01IiBjbGFzcz0iaGVhZGluZy1lbGVtZW50Ij48c3Bhbj5sZXZlbCA1PC9zcGFuPg0KICA8YSBocmVmPSIjbGV2ZWwtNSIgY2xhc3M9ImhlYWRpbmctbWFyayI&#43;DQogICAgPHN2ZyBjbGFzcz0ib2N0aWNvbiBvY3RpY29uLWxpbmsiIHZpZXdCb3g9IjAgMCAxNiAxNiIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBkPSJtNy43NzUgMy4yNzUgMS4yNS0xLjI1YTMuNSAzLjUgMCAxIDEgNC45NSA0Ljk1bC0yLjUgMi41YTMuNSAzLjUgMCAwIDEtNC45NSAwIC43NTEuNzUxIDAgMCAxIC4wMTgtMS4wNDIuNzUxLjc1MSAwIDAgMSAxLjA0Mi0uMDE4IDEuOTk4IDEuOTk4IDAgMCAwIDIuODMgMGwyLjUtMi41YTIuMDAyIDIuMDAyIDAgMCAwLTIuODMtMi44M2wtMS4yNSAxLjI1YS43NTEuNzUxIDAgMCAxLTEuMDQyLS4wMTguNzUxLjc1MSAwIDAgMS0uMDE4LTEuMDQyWm0tNC42OSA5LjY0YTEuOTk4IDEuOTk4IDAgMCAwIDIuODMgMGwxLjI1LTEuMjVhLjc1MS43NTEgMCAwIDEgMS4wNDIuMDE4Ljc1MS43NTEgMCAwIDEgLjAxOCAxLjA0MmwtMS4yNSAxLjI1YTMuNSAzLjUgMCAxIDEtNC45NS00Ljk1bDIuNS0yLjVhMy41IDMuNSAwIDAgMSA0Ljk1IDAgLjc1MS43NTEgMCAwIDEtLjAxOCAxLjA0Mi43NTEuNzUxIDAgMCAxLTEuMDQyLjAxOCAxLjk5OCAxLjk5OCAwIDAgMC0yLjgzIDBsLTIuNSAyLjVhMS45OTggMS45OTggMCAwIDAgMCAyLjgzWiI&#43;PC9wYXRoPjwvc3ZnPg0KICA8L2E&#43;DQo8L2gyPjxwPui/memHjOiOt&#43;W&#43;l2ZsYWfopoHmnIlzdWlk5L2N77yM5Lmf5bCx5piv55SoIDxjb2RlPi9jaGFsbGVuZ2UvZW1icnlvZ2RiX2xldmVsNSAteCBlLmdkYjwvY29kZT4g5p2l6L&#43;Q6KGM6ISa5pys44CCPC9wPgo8ZGl2IGNsYXNzPSJoaWdobGlnaHQiPjxkaXYgY2xhc3M9ImNocm9tYSI&#43;Cjx0YWJsZSBjbGFzcz0ibG50YWJsZSI&#43;PHRyPjx0ZCBjbGFzcz0ibG50ZCI&#43;CjxwcmUgdGFiaW5kZXg9IjAiIGNsYXNzPSJjaHJvbWEiPjxjb2RlPjxzcGFuIGNsYXNzPSJsbnQiPjEKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjIKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjMKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjQKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjUKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjYKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjcKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjgKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjkKPC9zcGFuPjwvY29kZT48L3ByZT48L3RkPgo8dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZSBjbGFzcz0ibGFuZ3VhZ2Utc2hlbGwiIGRhdGEtbGFuZz0ic2hlbGwiPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjxzcGFuIGNsYXNzPSJjMSI&#43;IyBlLmdkYuiEmuacrOWmguS4izwvc3Bhbj4KPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj5ydW4KPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj5iICptYWluKzc2MiA8c3BhbiBjbGFzcz0iYzEiPiPov5nph4zlsLHmmK9zY2FuZuWSjHJlYWTkuYvlkI7nmoTkuIDkuKrlnLDmlrnvvIzov5nmoLflj6/ku6Xnm7TmjqXorr7nva7mlbDmja7kuoY8L3NwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;Y29tbWFuZHMKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4gICAgc2lsZW50Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;ICAgIDxzcGFuIGNsYXNzPSJuYiI&#43;c2V0PC9zcGFuPiAqPHNwYW4gY2xhc3M9Im8iPig8L3NwYW4&#43;dW5zaWduZWQgbG9uZyBsb25nKjxzcGFuIGNsYXNzPSJvIj4pKDwvc3Bhbj48c3BhbiBjbGFzcz0ibnYiPiRyYnA8L3NwYW4&#43;LTB4MTA8c3BhbiBjbGFzcz0ibyI&#43;KTwvc3Bhbj4gPHNwYW4gY2xhc3M9Im8iPj08L3NwYW4&#43;ICo8c3BhbiBjbGFzcz0ibyI&#43;KDwvc3Bhbj51bnNpZ25lZCBsb25nIGxvbmcqPHNwYW4gY2xhc3M9Im8iPikoPC9zcGFuPjxzcGFuIGNsYXNzPSJudiI&#43;JHJicDwvc3Bhbj4tMHgxODxzcGFuIGNsYXNzPSJvIj4pPC9zcGFuPgo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPiAgICA8c3BhbiBjbGFzcz0iayI&#43;Y29udGludWU8L3NwYW4&#43;Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;ZW5kCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;cnVuIHJlYm9ydDwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvdGQ&#43;PC90cj48L3RhYmxlPgo8L2Rpdj4KPC9kaXY&#43;PGgyIGlkPSJsZXZlbC02IiBjbGFzcz0iaGVhZGluZy1lbGVtZW50Ij48c3Bhbj5sZXZlbCA2PC9zcGFuPg0KICA8YSBocmVmPSIjbGV2ZWwtNiIgY2xhc3M9ImhlYWRpbmctbWFyayI&#43;DQogICAgPHN2ZyBjbGFzcz0ib2N0aWNvbiBvY3RpY29uLWxpbmsiIHZpZXdCb3g9IjAgMCAxNiAxNiIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBkPSJtNy43NzUgMy4yNzUgMS4yNS0xLjI1YTMuNSAzLjUgMCAxIDEgNC45NSA0Ljk1bC0yLjUgMi41YTMuNSAzLjUgMCAwIDEtNC45NSAwIC43NTEuNzUxIDAgMCAxIC4wMTgtMS4wNDIuNzUxLjc1MSAwIDAgMSAxLjA0Mi0uMDE4IDEuOTk4IDEuOTk4IDAgMCAwIDIuODMgMGwyLjUtMi41YTIuMDAyIDIuMDAyIDAgMCAwLTIuODMtMi44M2wtMS4yNSAxLjI1YS43NTEuNzUxIDAgMCAxLTEuMDQyLS4wMTguNzUxLjc1MSAwIDAgMS0uMDE4LTEuMDQyWm0tNC42OSA5LjY0YTEuOTk4IDEuOTk4IDAgMCAwIDIuODMgMGwxLjI1LTEuMjVhLjc1MS43NTEgMCAwIDEgMS4wNDIuMDE4Ljc1MS43NTEgMCAwIDEgLjAxOCAxLjA0MmwtMS4yNSAxLjI1YTMuNSAzLjUgMCAxIDEtNC45NS00Ljk1bDIuNS0yLjVhMy41IDMuNSAwIDAgMSA0Ljk1IDAgLjc1MS43NTEgMCAwIDEtLjAxOCAxLjA0Mi43NTEuNzUxIDAgMCAxLTEuMDQyLjAxOCAxLjk5OCAxLjk5OCAwIDAgMC0yLjgzIDBsLTIuNSAyLjVhMS45OTggMS45OTggMCAwIDAgMCAyLjgzWiI&#43;PC9wYXRoPjwvc3ZnPg0KICA8L2E&#43;DQo8L2gyPjxoMyBpZD0id3AxIiBjbGFzcz0iaGVhZGluZy1lbGVtZW50Ij48c3Bhbj53cDE8L3NwYW4&#43;DQogIDxhIGhyZWY9IiN3cDEiIGNsYXNzPSJoZWFkaW5nLW1hcmsiPg0KICAgIDxzdmcgY2xhc3M9Im9jdGljb24gb2N0aWNvbi1saW5rIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PHBhdGggZD0ibTcuNzc1IDMuMjc1IDEuMjUtMS4yNWEzLjUgMy41IDAgMSAxIDQuOTUgNC45NWwtMi41IDIuNWEzLjUgMy41IDAgMCAxLTQuOTUgMCAuNzUxLjc1MSAwIDAgMSAuMDE4LTEuMDQyLjc1MS43NTEgMCAwIDEgMS4wNDItLjAxOCAxLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMi41LTIuNWEyLjAwMiAyLjAwMiAwIDAgMC0yLjgzLTIuODNsLTEuMjUgMS4yNWEuNzUxLjc1MSAwIDAgMS0xLjA0Mi0uMDE4Ljc1MS43NTEgMCAwIDEtLjAxOC0xLjA0MlptLTQuNjkgOS42NGExLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMS4yNS0xLjI1YS43NTEuNzUxIDAgMCAxIDEuMDQyLjAxOC43NTEuNzUxIDAgMCAxIC4wMTggMS4wNDJsLTEuMjUgMS4yNWEzLjUgMy41IDAgMSAxLTQuOTUtNC45NWwyLjUtMi41YTMuNSAzLjUgMCAwIDEgNC45NSAwIC43NTEuNzUxIDAgMCAxLS4wMTggMS4wNDIuNzUxLjc1MSAwIDAgMS0xLjA0Mi4wMTggMS45OTggMS45OTggMCAwIDAtMi44MyAwbC0yLjUgMi41YTEuOTk4IDEuOTk4IDAgMCAwIDAgMi44M1oiPjwvcGF0aD48L3N2Zz4NCiAgPC9hPg0KPC9oMz48cD7ov5nph4zmjInnhacgbGV2ZWwgNeeahOaWueahiO&#43;8jOiuoeeul&#43;maj&#43;acuuWAvO&#43;8jOS9huaYr&#43;W&#43;iOaAqu&#43;8jOWcqCA8Y29kZT5Zb3UgaW5wdXQ6IDwvY29kZT4g55qE5pe25YCZ6L6T5YWl5LiA5LiqIDxjb2RlPnE8L2NvZGU&#43;IO&#43;8jOeEtuWQjuWQjumdoueahOi&#43;k&#43;WFpeWwsemDvei3s&#43;i/h&#43;S6hu&#43;8jOebtOaOpeWHumZsYWfkuobjgII8L3A&#43;CjxoMyBpZD0id3AyIiBjbGFzcz0iaGVhZGluZy1lbGVtZW50Ij48c3Bhbj53cDI8L3NwYW4&#43;DQogIDxhIGhyZWY9IiN3cDIiIGNsYXNzPSJoZWFkaW5nLW1hcmsiPg0KICAgIDxzdmcgY2xhc3M9Im9jdGljb24gb2N0aWNvbi1saW5rIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PHBhdGggZD0ibTcuNzc1IDMuMjc1IDEuMjUtMS4yNWEzLjUgMy41IDAgMSAxIDQuOTUgNC45NWwtMi41IDIuNWEzLjUgMy41IDAgMCAxLTQuOTUgMCAuNzUxLjc1MSAwIDAgMSAuMDE4LTEuMDQyLjc1MS43NTEgMCAwIDEgMS4wNDItLjAxOCAxLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMi41LTIuNWEyLjAwMiAyLjAwMiAwIDAgMC0yLjgzLTIuODNsLTEuMjUgMS4yNWEuNzUxLjc1MSAwIDAgMS0xLjA0Mi0uMDE4Ljc1MS43NTEgMCAwIDEtLjAxOC0xLjA0MlptLTQuNjkgOS42NGExLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMS4yNS0xLjI1YS43NTEuNzUxIDAgMCAxIDEuMDQyLjAxOC43NTEuNzUxIDAgMCAxIC4wMTggMS4wNDJsLTEuMjUgMS4yNWEzLjUgMy41IDAgMSAxLTQuOTUtNC45NWwyLjUtMi41YTMuNSAzLjUgMCAwIDEgNC45NSAwIC43NTEuNzUxIDAgMCAxLS4wMTggMS4wNDIuNzUxLjc1MSAwIDAgMS0xLjA0Mi4wMTggMS45OTggMS45OTggMCAwIDAtMi44MyAwbC0yLjUgMi41YTEuOTk4IDEuOTk4IDAgMCAwIDAgMi44M1oiPjwvcGF0aD48L3N2Zz4NCiAgPC9hPg0KPC9oMz48ZGl2IGNsYXNzPSJoaWdobGlnaHQiPjxkaXYgY2xhc3M9ImNocm9tYSI&#43;Cjx0YWJsZSBjbGFzcz0ibG50YWJsZSI&#43;PHRyPjx0ZCBjbGFzcz0ibG50ZCI&#43;CjxwcmUgdGFiaW5kZXg9IjAiIGNsYXNzPSJjaHJvbWEiPjxjb2RlPjxzcGFuIGNsYXNzPSJsbnQiPjEKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjIKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjMKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjQKPC9zcGFuPjwvY29kZT48L3ByZT48L3RkPgo8dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZSBjbGFzcz0ibGFuZ3VhZ2UtZmFsbGJhY2siIGRhdGEtbGFuZz0iZmFsbGJhY2siPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU2NDY1MDhlOGQ0YyAmbHQ7KzY3OCZndDs6ICAgbW92ICAgIHJkeCxRV09SRCBQVFIgW3JicC0weDEwXQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU2NDY1MDhlOGQ1MCAmbHQ7KzY4MiZndDs6ICAgbW92ICAgIHJheCxRV09SRCBQVFIgW3JicC0weDE4XQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU2NDY1MDhlOGQ1NCAmbHQ7KzY4NiZndDs6ICAgY21wICAgIHJkeCxyYXgKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NjQ2NTA4ZThkNTcgJmx0Oys2ODkmZ3Q7OiAgIGplICAgICAweDU2NDY1MDhlOGQ2MyAmbHQ7bWFpbis3MDEmZ3Q7PC9zcGFuPjwvc3Bhbj48L2NvZGU&#43;PC9wcmU&#43;PC90ZD48L3RyPjwvdGFibGU&#43;CjwvZGl2Pgo8L2Rpdj48cD7ov5nph4zlsLHmmK/lhbPplK7mmK8gY21wIHJkeO&#43;8jHJheOOAguWmguaenOebuOWQjOeahOivne&#43;8jOmCo&#43;S5iOebtOaOpei3s&#43;i9rOWIsOS4i&#43;mdoueahOWHveaVsO&#43;8jOWug&#43;S5i&#43;WQjuS8muaJp&#43;ihjHdpbuWHveaVsOOAgui/meagt&#43;i&#43;vuWIsOiwg&#43;aVtOaOp&#43;WItua1geeahOebrueahOOAgjwvcD4KPGRpdiBjbGFzcz0iaGlnaGxpZ2h0Ij48ZGl2IGNsYXNzPSJjaHJvbWEiPgo8dGFibGUgY2xhc3M9ImxudGFibGUiPjx0cj48dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZT48c3BhbiBjbGFzcz0ibG50Ij4xCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4yCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4zCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij40Cjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij41Cjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij42Cjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij43Cjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij44Cjwvc3Bhbj48L2NvZGU&#43;PC9wcmU&#43;PC90ZD4KPHRkIGNsYXNzPSJsbnRkIj4KPHByZSB0YWJpbmRleD0iMCIgY2xhc3M9ImNocm9tYSI&#43;PGNvZGUgY2xhc3M9Imxhbmd1YWdlLXNoZWxsIiBkYXRhLWxhbmc9InNoZWxsIj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj5ydW4KPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj48c3BhbiBjbGFzcz0ibmIiPmJyZWFrPC9zcGFuPiAqbWFpbis2ODYKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj5jb21tYW5kcwo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPiAgICBzaWxlbnQKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4gICAgPHNwYW4gY2xhc3M9Im5iIj5zZXQ8L3NwYW4&#43;IDxzcGFuIGNsYXNzPSJudiI&#43;JHJkeDwvc3Bhbj4gPHNwYW4gY2xhc3M9Im8iPj08L3NwYW4&#43;IDxzcGFuIGNsYXNzPSJudiI&#43;JHJheDwvc3Bhbj4KPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4gICAgPHNwYW4gY2xhc3M9ImsiPmNvbnRpbnVlPC9zcGFuPgo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPmVuZAo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPnJ1biByZWJvcnQ8L3NwYW4&#43;PC9zcGFuPjwvY29kZT48L3ByZT48L3RkPjwvdHI&#43;PC90YWJsZT4KPC9kaXY&#43;CjwvZGl2PjxoMiBpZD0ibGV2ZWwtNyIgY2xhc3M9ImhlYWRpbmctZWxlbWVudCI&#43;PHNwYW4&#43;bGV2ZWwgNzwvc3Bhbj4NCiAgPGEgaHJlZj0iI2xldmVsLTciIGNsYXNzPSJoZWFkaW5nLW1hcmsiPg0KICAgIDxzdmcgY2xhc3M9Im9jdGljb24gb2N0aWNvbi1saW5rIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PHBhdGggZD0ibTcuNzc1IDMuMjc1IDEuMjUtMS4yNWEzLjUgMy41IDAgMSAxIDQuOTUgNC45NWwtMi41IDIuNWEzLjUgMy41IDAgMCAxLTQuOTUgMCAuNzUxLjc1MSAwIDAgMSAuMDE4LTEuMDQyLjc1MS43NTEgMCAwIDEgMS4wNDItLjAxOCAxLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMi41LTIuNWEyLjAwMiAyLjAwMiAwIDAgMC0yLjgzLTIuODNsLTEuMjUgMS4yNWEuNzUxLjc1MSAwIDAgMS0xLjA0Mi0uMDE4Ljc1MS43NTEgMCAwIDEtLjAxOC0xLjA0MlptLTQuNjkgOS42NGExLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMS4yNS0xLjI1YS43NTEuNzUxIDAgMCAxIDEuMDQyLjAxOC43NTEuNzUxIDAgMCAxIC4wMTggMS4wNDJsLTEuMjUgMS4yNWEzLjUgMy41IDAgMSAxLTQuOTUtNC45NWwyLjUtMi41YTMuNSAzLjUgMCAwIDEgNC45NSAwIC43NTEuNzUxIDAgMCAxLS4wMTggMS4wNDIuNzUxLjc1MSAwIDAgMS0xLjA0Mi4wMTggMS45OTggMS45OTggMCAwIDAtMi44MyAwbC0yLjUgMi41YTEuOTk4IDEuOTk4IDAgMCAwIDAgMi44M1oiPjwvcGF0aD48L3N2Zz4NCiAgPC9hPg0KPC9oMj48cD7lvojmg4rlpYfvvIznm7TmjqUgPGNvZGU&#43;Y2FsbCAodm9pZCl3aW4oKTwvY29kZT4g6LCD55So5Ye95pWw5bCx5Ye65LqG77yM5LiA5byA5aeL6L&#43;Y5oOz552A5Yqr5oyB6L&#43;U5Zue5Zyw5Z2A5p2l6Lez6L2s5p2l552A77yM55yL5p2l5piv5oOz6bq754Om5LqG44CCPC9wPgo8cD7ov5nph4zooaXlhYVnZGLkuK3lj6/ku6XosIPnlKjlh73mlbDnmoTnuqbmnZ88L3A&#43;CjxvbD4KPGxpPjxzdHJvbmc&#43;5Ye95pWw5b&#43;F6aG75piv5Y&#43;v6KeB55qEPC9zdHJvbmc&#43;77ya5ZyoIEdEQiDkuK3osIPnlKjnmoTlh73mlbDlv4XpobvmmK/lnKjlvZPliY3osIPor5XnmoTnqIvluo/nmoTlj6/miafooYzku6PnoIHkuK3lj6/op4HnmoTjgILlpoLmnpzlh73mlbDmmK/lnKjlpJbpg6jlupPmiJbmnKrliqDovb3nmoTmqKHlnZfkuK3lrprkuYnnmoTvvIxHREIg5bCG5peg5rOV55u05o6l6LCD55So5a6DPC9saT4KPGxpPjxzdHJvbmc&#43;5Ye95pWw5b&#43;F6aG75piv5rKh5pyJ5Ymv5L2c55So55qEPC9zdHJvbmc&#43;77yaR0RCIOS4reeahOWHveaVsOiwg&#43;eUqOaYr&#43;WcqOiwg&#43;ivlei/h&#43;eoi&#43;S4rei/m&#43;ihjOeahO&#43;8jOiwg&#43;eUqOWHveaVsOWPr&#43;iDveS8muW9seWTjeeoi&#43;W6j&#43;eKtuaAge&#43;8jOWMheaLrOaUueWPmOWPmOmHj&#43;eahOWAvOetieOAguWboOatpO&#43;8jOacgOWlveWPquWcqOiwg&#43;ivlei/h&#43;eoi&#43;S4reiwg&#43;eUqOayoeacieWJr&#43;S9nOeUqOeahOWHveaVsO&#43;8jOS7pemBv&#43;WFjeaEj&#43;WkluihjOS4ujwvbGk&#43;Cjwvb2w&#43;CjxoMiBpZD0ibGV2ZWwtOCIgY2xhc3M9ImhlYWRpbmctZWxlbWVudCI&#43;PHNwYW4&#43;bGV2ZWwgODwvc3Bhbj4NCiAgPGEgaHJlZj0iI2xldmVsLTgiIGNsYXNzPSJoZWFkaW5nLW1hcmsiPg0KICAgIDxzdmcgY2xhc3M9Im9jdGljb24gb2N0aWNvbi1saW5rIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBhcmlhLWhpZGRlbj0idHJ1ZSI&#43;PHBhdGggZD0ibTcuNzc1IDMuMjc1IDEuMjUtMS4yNWEzLjUgMy41IDAgMSAxIDQuOTUgNC45NWwtMi41IDIuNWEzLjUgMy41IDAgMCAxLTQuOTUgMCAuNzUxLjc1MSAwIDAgMSAuMDE4LTEuMDQyLjc1MS43NTEgMCAwIDEgMS4wNDItLjAxOCAxLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMi41LTIuNWEyLjAwMiAyLjAwMiAwIDAgMC0yLjgzLTIuODNsLTEuMjUgMS4yNWEuNzUxLjc1MSAwIDAgMS0xLjA0Mi0uMDE4Ljc1MS43NTEgMCAwIDEtLjAxOC0xLjA0MlptLTQuNjkgOS42NGExLjk5OCAxLjk5OCAwIDAgMCAyLjgzIDBsMS4yNS0xLjI1YS43NTEuNzUxIDAgMCAxIDEuMDQyLjAxOC43NTEuNzUxIDAgMCAxIC4wMTggMS4wNDJsLTEuMjUgMS4yNWEzLjUgMy41IDAgMSAxLTQuOTUtNC45NWwyLjUtMi41YTMuNSAzLjUgMCAwIDEgNC45NSAwIC43NTEuNzUxIDAgMCAxLS4wMTggMS4wNDIuNzUxLjc1MSAwIDAgMS0xLjA0Mi4wMTggMS45OTggMS45OTggMCAwIDAtMi44MyAwbC0yLjUgMi41YTEuOTk4IDEuOTk4IDAgMCAwIDAgMi44M1oiPjwvcGF0aD48L3N2Zz4NCiAgPC9hPg0KPC9oMj48cD7ov5nph4zmmK8gd2luIOWHveaVsOWHuueOsOS6humXrumimOOAgjwvcD4KPGRpdiBjbGFzcz0iaGlnaGxpZ2h0Ij48ZGl2IGNsYXNzPSJjaHJvbWEiPgo8dGFibGUgY2xhc3M9ImxudGFibGUiPjx0cj48dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZT48c3BhbiBjbGFzcz0ibG50Ij4gMQo8L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxudCI&#43;IDIKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPiAzCjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4gNAo8L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxudCI&#43;IDUKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPiA2Cjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4gNwo8L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxudCI&#43;IDgKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPiA5Cjwvc3Bhbj48c3BhbiBjbGFzcz0ibG50Ij4xMAo8L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxudCI&#43;MTEKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjEyCjwvc3Bhbj48L2NvZGU&#43;PC9wcmU&#43;PC90ZD4KPHRkIGNsYXNzPSJsbnRkIj4KPHByZSB0YWJpbmRleD0iMCIgY2xhc3M9ImNocm9tYSI&#43;PGNvZGUgY2xhc3M9Imxhbmd1YWdlLWZhbGxiYWNrIiBkYXRhLWxhbmc9ImZhbGxiYWNrIj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NTY5NTRmYWQ5NTEgJmx0OyswJmd0OzogICAgIGVuZGJyNjQgCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTU2OTU0ZmFkOTU1ICZsdDsrNCZndDs6ICAgICBwdXNoICAgcmJwCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTU2OTU0ZmFkOTU2ICZsdDsrNSZndDs6ICAgICBtb3YgICAgcmJwLHJzcAo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU1Njk1NGZhZDk1OSAmbHQ7KzgmZ3Q7OiAgICAgc3ViICAgIHJzcCwweDEwCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTU2OTU0ZmFkOTVkICZsdDsrMTImZ3Q7OiAgICBtb3YgICAgUVdPUkQgUFRSIFtyYnAtMHg4XSwweDAKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NTY5NTRmYWQ5NjUgJmx0OysyMCZndDs6ICAgIG1vdiAgICByYXgsUVdPUkQgUFRSIFtyYnAtMHg4XQo8L3NwYW4&#43;PC9zcGFuPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjB4MDAwMDU1Njk1NGZhZDk2OSAmbHQ7KzI0Jmd0OzogICAgbW92ICAgIGVheCxEV09SRCBQVFIgW3JheF0gI&#43;atpOaXtnJheD0w77yM6K6/6Zeu6Z2e5rOV5Zyw5Z2A5byC5bi477yM5omA5Lul6L&#43;Z6YeM5pyJ6Zeu6aKY77yM5Ye6546wc2VnZmF1bHQgZmF1bHQKPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NTY5NTRmYWQ5NmIgJmx0OysyNiZndDs6ICAgIGxlYSAgICBlZHgsW3JheCsweDFdCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTU2OTU0ZmFkOTZlICZsdDsrMjkmZ3Q7OiAgICBtb3YgICAgcmF4LFFXT1JEIFBUUiBbcmJwLTB4OF0KPC9zcGFuPjwvc3Bhbj48c3BhbiBjbGFzcz0ibGluZSI&#43;PHNwYW4gY2xhc3M9ImNsIj4weDAwMDA1NTY5NTRmYWQ5NzIgJmx0OyszMyZndDs6ICAgIG1vdiAgICBEV09SRCBQVFIgW3JheF0sZWR4Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTU2OTU0ZmFkOTc0ICZsdDsrMzUmZ3Q7OiAgICBsZWEgICAgcmRpLFtyaXArMHg3M2VdICAgICAgICAjIDB4NTU2OTU0ZmFlMGI5Cjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;MHgwMDAwNTU2OTU0ZmFkOTdiICZsdDsrNDImZ3Q7OiAgICBjYWxsICAgMHg1NTY5NTRmYWQxODAgJmx0O3B1dHNAcGx0Jmd0Ozwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvdGQ&#43;PC90cj48L3RhYmxlPgo8L2Rpdj4KPC9kaXY&#43;PHA&#43;6L&#43;Z6YeM5bCx5piv6Lez6L2s5Y2z5Y&#43;v44CCPC9wPgo8ZGl2IGNsYXNzPSJoaWdobGlnaHQiPjxkaXYgY2xhc3M9ImNocm9tYSI&#43;Cjx0YWJsZSBjbGFzcz0ibG50YWJsZSI&#43;PHRyPjx0ZCBjbGFzcz0ibG50ZCI&#43;CjxwcmUgdGFiaW5kZXg9IjAiIGNsYXNzPSJjaHJvbWEiPjxjb2RlPjxzcGFuIGNsYXNzPSJsbnQiPjEKPC9zcGFuPjxzcGFuIGNsYXNzPSJsbnQiPjIKPC9zcGFuPjwvY29kZT48L3ByZT48L3RkPgo8dGQgY2xhc3M9ImxudGQiPgo8cHJlIHRhYmluZGV4PSIwIiBjbGFzcz0iY2hyb21hIj48Y29kZSBjbGFzcz0ibGFuZ3VhZ2Utc2hlbGwiIGRhdGEtbGFuZz0ic2hlbGwiPjxzcGFuIGNsYXNzPSJsaW5lIj48c3BhbiBjbGFzcz0iY2wiPjxzcGFuIGNsYXNzPSJvIj4oPC9zcGFuPmdkYjxzcGFuIGNsYXNzPSJvIj4pPC9zcGFuPjxzcGFuIGNsYXNzPSJuYiI&#43;c2V0PC9zcGFuPiA8c3BhbiBjbGFzcz0ibnYiPiRyaXA8L3NwYW4&#43;PHNwYW4gY2xhc3M9Im8iPj08L3NwYW4&#43;MHgwMDAwNTU2OTU0ZmFkOTdiCjwvc3Bhbj48L3NwYW4&#43;PHNwYW4gY2xhc3M9ImxpbmUiPjxzcGFuIGNsYXNzPSJjbCI&#43;PHNwYW4gY2xhc3M9Im8iPig8L3NwYW4&#43;Z2RiPHNwYW4gY2xhc3M9Im8iPik8L3NwYW4&#43;Yzwvc3Bhbj48L3NwYW4&#43;PC9jb2RlPjwvcHJlPjwvdGQ&#43;PC90cj48L3RhYmxlPgo8L2Rpdj4KPC9kaXY&#43;</cipher-text>
+  </fixit-encryptor><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-11-01 23:09:28">更新于 2024.11.1&nbsp;</span>
+      </div></div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/blog/tags/pwn/" class="post-tag" title="标签 - Pwn">Pwn</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/blog/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/blog/categories/pwn/assembly-crash-course/" class="post-nav-item" rel="prev" title="Assembly Crash Course"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Assembly Crash Course</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title encrypted-hidden">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content encrypted-hidden" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered order-1">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.136.5"><img class="hugo-icon" src="/blog/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.13"><img class="fixit-icon" src="/blog/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright order-2" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><a href="https://github.com/czTangt/blog" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner left d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/blog/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="preload" href="/blog/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/blog/lib/cookieconsent/cookieconsent.min.css"><script src="/blog/lib/autocomplete/autocomplete.min.js" defer></script><script src="/blog/lib/fuse/fuse.min.js" defer></script><script src="/blog/lib/lightgallery/lightgallery.min.js" defer></script><script src="/blog/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/blog/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/blog/lib/sharer/sharer.min.js" async defer></script><script src="/blog/lib/katex/katex.min.js" defer></script><script src="/blog/lib/katex/auto-render.min.js" defer></script><script src="/blog/lib/katex/mhchem.min.js" defer></script><script src="/blog/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/blog/lib/crypto-js/core.min.js" defer></script><script src="/blog/lib/crypto-js/enc-base64.min.js" defer></script><script src="/blog/lib/crypto-js/sha256.min.js" defer></script><script src="/blog/lib/xxhash-wasm/xxhash-wasm.js" defer></script><script src="/blog/js/fixit-decryptor.min.js" defer></script><script src="/blog/js/codeblock.js" defer></script><script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"encryption":{"all":true,"shortcode":false},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/blog/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"version":"v0.3.13"};console.log('Page config:', window.config);</script><script src="/blog/js/theme.min.js" defer></script></body>
+</html>
