@@ -15,7 +15,7 @@
 
 ## 文件名设置
 
-`Custom Output Format` 就是文件在 vscode 中的展现形式，这里针对 Fixit 主题中 [Image 的要求](https://fixit.lruihao.cn/zh-cn/documentation/content-management/shortcodes/extended/introduction/#image) 进行了修改。这样后面的 `title` 可以直接生成，然后我们需要修改的就是前面的 `alt` 了。 `layouts/partials/plugin/image.html` 文件在之前进行修改了，所以图片下面的图标显示的就只有 `alt` 了，只有鼠标放在图片上面显示的才是 `title`。
+`Custom Output Format` 就是文件在 vscode 中的展现形式，这里针对 Fixit 主题中 [Image 的要求](https://fixit.lruihao.cn/zh-cn/documentation/content-management/shortcodes/extended/introduction/#image) 进行了修改。这样后面的 `title` 可以直接生成，然后我们需要修改的就是前面的 `alt` 了。 `layouts/partials/plugin/image.html` 文件在之前进行修改了，所以图片下面的图标显示的就只有 `alt` 了，只有鼠标放在图片上面和放大图片显示的才是 `title`。
 
 ![本地格式](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241031232237.png &#34;20241031232237&#34;)
 
