@@ -25,7 +25,7 @@
 ## 保存路径
 
 这里有一个 `Data Path`，vscode 插件会把每次的提交形成 `json` 数据添加到这个文件中，所以可以设置存储路径，之后查看图片可以迅速找到相关信息。这里我也将路径设置为博客的仓库，使其作为附属信息上传到 github 上。
-![20241101101253](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101101253.png &#34;20241101101253&#34;)
+![路径配置](https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101101253.png &#34;20241101101253&#34;)
 
 ---
 
