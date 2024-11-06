@@ -1,85 +1,346 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>Some About Git - czTang</title><meta name=author content="czTang">
-<meta name=description content="一些关于 git 的操作
-"><meta name=keywords content='config'><meta itemprop=name content="Some about Git"><meta itemprop=description content="一些关于 git 的操作"><meta itemprop=datePublished content="2024-11-01T10:43:39+08:00"><meta itemprop=dateModified content="2024-11-04T18:01:55+08:00"><meta itemprop=wordCount content="283"><meta itemprop=keywords content="Config"><meta property="og:url" content="https://czTangt.github.io/blog/categories/config/git/"><meta property="og:site_name" content="czTang"><meta property="og:title" content="Some about Git"><meta property="og:description" content="一些关于 git 的操作"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="categories"><meta property="article:published_time" content="2024-11-01T10:43:39+08:00"><meta property="article:modified_time" content="2024-11-04T18:01:55+08:00"><meta property="article:tag" content="Config"><meta name=twitter:card content="summary"><meta name=twitter:title content="Some about Git"><meta name=twitter:description content="一些关于 git 的操作"><meta name=application-name content="FixIt"><meta name=apple-mobile-web-app-title content="FixIt"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410312135963.svg><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=canonical type=text/html href=https://czTangt.github.io/blog/categories/config/git/ title="Some about Git - czTang"><link rel=prev type=text/html href=https://czTangt.github.io/blog/categories/config/picgo/ title="VScode PicGo插件配置"><link rel=next type=text/html href=https://czTangt.github.io/blog/categories/config/fixit/ title=FixIt配置><link rel=alternate type=text/markdown href=https://czTangt.github.io/blog/categories/config/git/index.md title="Some about Git - czTang"><link rel=stylesheet href=/blog/css/style.min.css><link rel=preload href=/blog/lib/fontawesome-free/all.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/blog/lib/animate/animate.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Some about Git","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/czTangt.github.io\/blog\/categories\/config\/git\/"},"genre":"posts","keywords":"config","wordcount":283,"url":"https:\/\/czTangt.github.io\/blog\/categories\/config\/git\/","datePublished":"2024-11-01T10:43:39+08:00","dateModified":"2024-11-04T18:01:55+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"czTang"},"description":""}</script><script src=/blog/js/head/color-scheme.min.js></script></head><body data-header-desktop=sticky data-header-mobile=auto><div class=wrapper data-page-style=normal><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=left><div class=header-title><a href=/blog/ title=czTang><span class=header-title-pre><i class='fa fa-coffee'>&nbsp</i></span><span class=header-title-text>czTang</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/blog/archives/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> Archives</a></li><li class=menu-item><a class=menu-link href=/blog/categories/><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden=true></i> Categories</a></li><li class=menu-item><a class=menu-link href=/blog/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> Tags</a></li><li class=menu-item><a class=menu-link href=/blog/about/><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden=true></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容…… id=search-input-desktop>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i>
-</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i>
-</a><span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/blog/ title=czTang><span class=header-title-pre><i class='fa fa-coffee'>&nbsp</i></span><span class=header-title-text>czTang</span></a><span class=header-subtitle></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容…… id=search-input-mobile>
-<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i>
-</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i>
-</a><span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/blog/archives/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> Archives</a></li><li class=menu-item><a class=menu-link href=/blog/categories/><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden=true></i> Categories</a></li><li class=menu-item><a class=menu-link href=/blog/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> Tags</a></li><li class=menu-item><a class=menu-link href=/blog/about/><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden=true></i> About</a></li><li class="menu-item menu-system"><span class="menu-system-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></span></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label=合集><div class="details collection-details open"><div class="details-summary collection-summary"><i class="fa-solid fa-layer-group fa-fw" aria-hidden=true></i>
-<span class=collection-name data-collections=合集>Config</span>
-<span class=collection-count>4</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden=true></i></div><div class="details-content collection-content"><nav><ul class=collection-list><li class=collection-item><a href=/blog/categories/config/picgo/ title="VScode PicGo插件配置">VScode PicGo插件配置</a></li><li class=collection-item><span class=active title="Some About Git">Some About Git</span></li><li class=collection-item><a href=/blog/categories/config/fixit/ title=FixIt配置>FixIt配置</a></li><li class=collection-item><a href=/blog/categories/config/android-studio/ title="Android Studio配置">Android Studio配置</a></li></ul><div class=collection-nav-simple><a href=/blog/categories/config/picgo/ class=collection-nav-item rel=prev title="VScode PicGo插件配置"><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i></a><span class=text-secondary>2/4</span><a href=/blog/categories/config/fixit/ class=collection-nav-item rel=next title=FixIt配置><i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></nav></div></div></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>Some About Git</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/czTangt title=作者 target=_blank rel="external nofollow noopener noreferrer author" class=author><img loading=lazy src=/blog/images/avatar.jpg alt=czTang data-title=czTang width=20 height=20 class=avatar style="background:url(/blog/images/loading.min.svg)no-repeat 50%" onload='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e);this.dataset.lazyloaded=""' onerror='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e)'>&nbsp;czTang</a></span><span class=post-included-in>&nbsp;收录于 <a href=/blog/categories/config/ class=post-category title="分类 - Config"><i class="fa-regular fa-folder fa-fw" aria-hidden=true></i> Config</a> 和 <a href=/blog/collections/config/ class=post-collection title="合集 - Config"><i class="fa-solid fa-layer-group fa-fw" aria-hidden=true></i> Config</a></span></div><div class=post-meta-line><span title="发布于 2024-11-01 10:43:39"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden=true></i><time datetime=2024.11.1>2024.11.1</time></span>&nbsp;<span title="更新于 2024-11-04 18:01:55"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden=true></i><time datetime=2024.11.4>2024.11.4</time></span>&nbsp;<span title="283 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden=true></i>约 300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden=true></i>预计阅读 2 分钟</span>&nbsp;</div></div><div class="details toc" id=toc-static data-kept=false><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#相关命令>相关命令</a></li><li><a href=#文件修改>文件修改</a></li><li><a href=#远程仓库到自己仓库>远程仓库到自己仓库</a></li><li><a href=#git-加速>Git 加速</a></li></ul></nav></div></div><div class=content id=content><p>一些关于 git 的操作</p><p><figure><a class=lightgallery href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=small" data-sub-html="<h2>20241101105334</h2>"><img loading=lazy src=https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png alt=git流程 srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=large 2x" data-title=20241101105334 style="background:url(/blog/images/loading.min.svg)no-repeat 50%" onload='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e);this.dataset.lazyloaded=""' onerror='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e)'></a><figcaption class=image-caption>git流程</figcaption></figure></p><h2 id=相关命令 class=heading-element><span>相关命令</span>
-<a href=#%e7%9b%b8%e5%85%b3%e5%91%bd%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 本地仓库初始化</span>
-</span></span><span class=line><span class=cl>git init 
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># 将文件提交到暂存区</span>
-</span></span><span class=line><span class=cl>git add <span class=o>[</span>file name<span class=o>]</span> 
-</span></span><span class=line><span class=cl>git add .  <span class=c1># 添加全部修改和新增文件</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># 将文件提交到本地仓库</span>
-</span></span><span class=line><span class=cl>git commit <span class=o>[</span>file name<span class=o>]</span> 
-</span></span><span class=line><span class=cl>git commit -m <span class=s2>&#34;commit information&#34;</span> <span class=o>[</span>file name<span class=o>]</span>
-</span></span><span class=line><span class=cl>git commit -m <span class=s2>&#34;commit inforamtion&#34;</span> 	<span class=c1># 提交全部到本地仓库</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># 添加远程仓库，这里是因为存在多个 git 用户所进行的配置，正常为 git@github:czTangt/blog.git</span>
-</span></span><span class=line><span class=cl>git remote add origin git@github_czTangt:czTangt/blog.git
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># 提交到远程仓库</span>
-</span></span><span class=line><span class=cl>git push -u origin <span class=o>[</span>branch name<span class=o>]</span>
-</span></span><span class=line><span class=cl>git push -f <span class=c1># 强制提交</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1># 分支操作</span>
-</span></span><span class=line><span class=cl>git checkout <span class=o>[</span>branch name<span class=o>]</span> <span class=c1># 切换分支</span>
-</span></span><span class=line><span class=cl>git branch -a <span class=c1># 查看所有分支</span>
-</span></span><span class=line><span class=cl>git checkout -b local_dev origin/remote_dev <span class=c1># 创建本地分支并于远程分支连接</span>
-</span></span><span class=line><span class=cl>git push origin --delete remote_dev <span class=c1># 删除远程分支</span></span></span></code></pre></td></tr></table></div></div><h2 id=文件修改 class=heading-element><span>文件修改</span>
-<a href=#%e6%96%87%e4%bb%b6%e4%bf%ae%e6%94%b9 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>对于 git 而言，<code>git add .</code> 会将所有修改和新增的文件信息提交到暂存区，之后使用 <code>git commit -m "xxx"</code> 会将暂存区的文件信息提交到本地仓库。但是这种方法是对于新增和修改的文件而言，对于删除的文件信息不会进行更新，所以可以采用两种方案：</p><ol><li>使用 <code>git rm xxx</code> 一个一个手动删除文件（<code>rm</code> 命令没有办法使用 <code>git rm .</code> 一起更新全部的文件删除信息），之后这些文件删除信息就提交到暂存区了，后续就可以继续使用 <code>git commit -m "xxx"</code> 来将代码提交到本地仓库</li><li>使用 <code>git commit -am</code> 命令，该命令会在提交到本地仓库时，先更新修改和删除的文件信息到暂存区（注意它不会提交新增加的文件信息）。所以加了 <code>-a</code> 在 <code>commit</code> 的时候，可以帮助省一步 <code>git add</code>，但是也只是对修改和删除文件有效，新文件还是要 <code>git add</code>，不然就是 <code>untracked</code> 状态。</li></ol><p>综上所述：<code>git add</code> 和 <code>git rm</code> 都是等价的操作，前者添加修改和新增文件信息，后者添加删除文件信息，他们都是将文件信息提交到暂存区，之后使用 <code>git commit -m "xxx"</code> 来将暂存区的文件信息提交到本地仓库，最后使用 <code>git push -u origin main</code> 来提交本地仓库代码到远程仓库的 main 分支。</p><h2 id=远程仓库到自己仓库 class=heading-element><span>远程仓库到自己仓库</span>
-<a href=#%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93%e5%88%b0%e8%87%aa%e5%b7%b1%e4%bb%93%e5%ba%93 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>拉取别人的仓库到自己仓库，主要应对github中没有对应仓库的情况<a href=https://blog.csdn.net/wangyangzhizunwudi/article/details/127330070 target=_blank rel="external nofollow noopener noreferrer">繁琐指南</a>，存在对应仓库，直接进行 fork，然后在本地添加自己的远程。简单的操作如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> git branch -r <span class=p>|</span> grep -v <span class=s1>&#39;\-&gt;&#39;</span> <span class=p>|</span> <span class=k>while</span> <span class=nb>read</span> remote<span class=p>;</span> <span class=k>do</span> git branch --track <span class=s2>&#34;</span><span class=si>${</span><span class=nv>remote</span><span class=p>#origin/</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$remote</span><span class=s2>&#34;</span><span class=p>;</span><span class=k>done</span>   <span class=c1># 获取所有远程分支到本地</span>
-</span></span><span class=line><span class=cl> git fetch --all				 	 <span class=c1># 获取该项目远程库的所有分支及其内容</span>
-</span></span><span class=line><span class=cl> git fetch --tags					 <span class=c1># 获取该项目远程库的标签(没标签就不必了)</span>
-</span></span><span class=line><span class=cl> git remote rename origin old-origin <span class=c1># 将原来的origin重命名一下</span>
-</span></span><span class=line><span class=cl> git remote add origin git@172.28.3.77:xs-soc/test-code.git  <span class=c1># 指定需要迁移到新的目标地址(自己的仓库)</span>
-</span></span><span class=line><span class=cl> git push origin --all				  <span class=c1># 推送所有分支及其内容</span>
-</span></span><span class=line><span class=cl> git push --tags					  <span class=c1># 推送所有标签及其内容</span>
-</span></span><span class=line><span class=cl> git remote rm origin                 <span class=c1># 删除当前远程库</span>
-</span></span><span class=line><span class=cl> git branch -M main					  <span class=c1># 重命名主要分支仓库	</span>
-</span></span><span class=line><span class=cl> git push -u origin main			  <span class=c1># 推送到指定分支</span></span></span></code></pre></td></tr></table></div></div><h2 id=git-加速 class=heading-element><span>Git 加速</span>
-<a href=#git-%e5%8a%a0%e9%80%9f class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>git失败的原因绝大多数都是网络问题，所以挂代理是最为推荐的选择。以下是起作用的一些方法</p><p>通用方法，更换 git 的代理为 443</p><ul><li><a href=https://www.cnblogs.com/tsalita/p/16181711.html target=_blank rel="external nofollow noopener noreferrer">SSH：连接到主机github.com端口22：连接时间超时</a></li></ul><p>但是对于 wsl，直接使用最新 wsl2 共用主机的代理即可（<strong>最为推荐</strong>），不嫌麻烦可以给配置个代理</p><ul><li><a href=https://github.com/microsoft/WSL/issues/10753 target=_blank rel="external nofollow noopener noreferrer">配置wsl镜像</a></li><li><a href=https://wph.im/199.html target=_blank rel="external nofollow noopener noreferrer">Windows10系统下配置WSL2自动走Clash代理</a>，之后clash打开allow lan模式即可</li><li><a href=https://nafx.top/archives/88ca14b9#5-etc-resolv-conf%e9%87%8d%e5%90%af%e4%b8%a2%e5%a4%b1 target=_blank rel="external nofollow noopener noreferrer">WSL2内使用Windows的v2ray代理 | Nafx&rsquo;s Blog</a>，这是v2的模式，首先最后面设置，然后前面配置bashrc</li></ul><p>有时候最后的方法会起点作用</p><ul><li><a href=https://blog.csdn.net/m0_38068229/article/details/108205928 target=_blank rel="external nofollow noopener noreferrer">git clone失败解决方案</a></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="更新于 2024-11-04 18:01:55">更新于 2024.11.4&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href=/blog/categories/config/git/index.md title=阅读原始文档 class=link-to-markdown>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 X" data-sharer=twitter data-url=https://czTangt.github.io/blog/categories/config/git/ data-title="Some About Git" data-hashtags=config><i class="fa-brands fa-x-twitter fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://czTangt.github.io/blog/categories/config/git/ data-hashtag=config><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
-<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://czTangt.github.io/blog/categories/config/git/ data-title="Some About Git"><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw me-1" aria-hidden=true></i><a href=/blog/tags/config/ class=post-tag title="标签 - Config">Config</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/blog/>主页</a></span></section></div><div class=post-nav><a href=/blog/categories/config/picgo/ class=post-nav-item rel=prev title="VScode PicGo插件配置"><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>VScode PicGo插件配置</a><a href=/blog/categories/config/fixit/ class=post-nav-item rel=next title=FixIt配置>FixIt配置<i class="fa-solid fa-angle-right fa-fw" aria-hidden=true></i></a></div></div></article><aside class=toc id=toc-auto aria-label=目录><h2 class=toc-title>目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden=true></i></h2><div class=toc-content id=toc-content-auto></div></aside></main><footer class=footer><div class=footer-container><div class="footer-line powered order-1">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.136.5"><img class=hugo-icon src=/blog/images/hugo.min.svg alt="Hugo logo"> Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.3.13"><img class=fixit-icon src=/blog/images/fixit.min.svg alt="FixIt logo"> FixIt</a></div><div class="footer-line copyright order-2" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
-<span itemprop=copyrightYear>2024</span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class="variant-numeric d-none">0%</span></div></div><a href=https://github.com/czTangt/blog title="View source on GitHub" target=_blank rel="external nofollow" class="github-corner left d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><noscript><div class=noscript-warning>该网站在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/blog/lib/lightgallery/css/lightgallery-bundle.min.css><link rel=preload href=/blog/lib/katex/katex.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/katex/katex.min.css></noscript><link rel=stylesheet href=/blog/lib/cookieconsent/cookieconsent.min.css><script src=/blog/lib/autocomplete/autocomplete.min.js defer></script><script src=/blog/lib/fuse/fuse.min.js defer></script><script src=/blog/lib/lightgallery/lightgallery.min.js defer></script><script src=/blog/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js defer></script><script src=/blog/lib/lightgallery/plugins/zoom/lg-zoom.min.js defer></script><script src=/blog/lib/sharer/sharer.min.js async defer></script><script src=/blog/lib/katex/katex.min.js defer></script><script src=/blog/lib/katex/auto-render.min.js defer></script><script src=/blog/lib/katex/mhchem.min.js defer></script><script src=/blog/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/blog/js/codeblock.js defer></script><script src=https://libs.baidu.com/jquery/2.1.4/jquery.min.js defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{distance:100,findAllMatches:!1,fuseIndexURL:"/blog/search.json",highlightTag:"em",ignoreFieldNorm:!1,ignoreLocation:!1,isCaseSensitive:!1,location:0,maxResultLength:10,minMatchCharLength:2,noResultsFound:"没有找到结果",snippetLength:30,threshold:.3,type:"fuse",useExtendedSearch:!1},version:"v0.3.13"}</script><script src=/blog/js/theme.min.js defer></script></body></html>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Some About Git - czTang</title><meta name="author" content="czTang">
+<meta name="description" content="一些关于 git 的操作
+"><meta name="keywords" content='config'>
+  <meta itemprop="name" content="Some about Git">
+  <meta itemprop="description" content="一些关于 git 的操作">
+  <meta itemprop="datePublished" content="2024-11-01T10:43:39+08:00">
+  <meta itemprop="dateModified" content="2024-11-04T18:01:55+08:00">
+  <meta itemprop="wordCount" content="283">
+  <meta itemprop="keywords" content="Config"><meta property="og:url" content="http://localhost:1313/blog/categories/config/git/">
+  <meta property="og:site_name" content="czTang">
+  <meta property="og:title" content="Some about Git">
+  <meta property="og:description" content="一些关于 git 的操作">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="categories">
+    <meta property="article:published_time" content="2024-11-01T10:43:39+08:00">
+    <meta property="article:modified_time" content="2024-11-04T18:01:55+08:00">
+    <meta property="article:tag" content="Config">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Some about Git">
+  <meta name="twitter:description" content="一些关于 git 的操作">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410312135963.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:1313/blog/categories/config/git/" title="Some about Git - czTang" /><link rel="prev" type="text/html" href="http://localhost:1313/blog/categories/config/picgo/" title="VScode PicGo插件配置" /><link rel="next" type="text/html" href="http://localhost:1313/blog/categories/config/fixit/" title="FixIt配置" /><link rel="alternate" type="text/markdown" href="http://localhost:1313/blog/categories/config/git/index.md" title="Some about Git - czTang"><link rel="stylesheet" href="/blog/css/style.min.css"><link rel="preload" href="/blog/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/blog/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Some about Git",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/blog\/categories\/config\/git\/"
+    },"genre": "posts","keywords": "config","wordcount":  283 ,
+    "url": "http:\/\/localhost:1313\/blog\/categories\/config\/git\/","datePublished": "2024-11-01T10:43:39+08:00","dateModified": "2024-11-04T18:01:55+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "czTang"
+      },"description": ""
+  }
+  </script><script src="/blog/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="left">
+    <div class="header-title">
+      <a href="/blog/" title="czTang"><span class="header-title-pre"><i class='fa fa-coffee'>&nbsp</i></span><span class="header-title-text">czTang</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/archives/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/categories/"
+                
+                
+              ><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/blog/about/"
+                
+                
+              ><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/blog/" title="czTang"><span class="header-title-pre"><i class='fa fa-coffee'>&nbsp</i></span><span class="header-title-text">czTang</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/archives/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/categories/"
+                  
+                  
+                ><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/blog/about/"
+                  
+                  
+                ><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"><div class="details collection-details open">
+      <div class="details-summary collection-summary">
+        <i class="fa-solid fa-layer-group fa-fw" aria-hidden="true"></i>
+        <span class="collection-name" data-collections="合集">Config</span>
+        <span class="collection-count">4</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></div>
+      <div class="details-content collection-content">
+        <nav>
+          <ul class="collection-list"><li class="collection-item"><a href="/blog/categories/config/picgo/" title="VScode PicGo插件配置">VScode PicGo插件配置</a></li><li class="collection-item"><span class="active" title="Some About Git">Some About Git</span></li><li class="collection-item"><a href="/blog/categories/config/fixit/" title="FixIt配置">FixIt配置</a></li><li class="collection-item"><a href="/blog/categories/config/android-studio/" title="Android Studio配置">Android Studio配置</a></li></ul>
+          <div class="collection-nav-simple"><a href="/blog/categories/config/picgo/" class="collection-nav-item" rel="prev" title="VScode PicGo插件配置"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i></a><span class="text-secondary">2/4</span><a href="/blog/categories/config/fixit/" class="collection-nav-item" rel="next" title="FixIt配置"><i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+        </nav>
+      </div>
+    </div></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Some About Git</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://github.com/czTangt" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="/blog/images/avatar.jpg" alt="czTang" data-title="czTang" width="20" height="20" class="avatar" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;czTang</a></span><span class="post-included-in">&nbsp;收录于 <a href="/blog/categories/config/" class="post-category" title="分类 - Config"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Config</a> 和 <a href="/blog/collections/config/" class="post-collection" title="合集 - Config"><i class="fa-solid fa-layer-group fa-fw" aria-hidden="true"></i> Config</a></span></div><div class="post-meta-line"><span title="发布于 2024-11-01 10:43:39"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024.11.1">2024.11.1</time></span>&nbsp;<span title="更新于 2024-11-04 18:01:55"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden="true"></i><time datetime="2024.11.4">2024.11.4</time></span>&nbsp;<span title="283 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#相关命令">相关命令</a></li>
+    <li><a href="#文件修改">文件修改</a></li>
+    <li><a href="#远程仓库到自己仓库">远程仓库到自己仓库</a></li>
+    <li><a href="#git-加速">Git 加速</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>一些关于 git 的操作</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=small" data-sub-html="<h2>20241101105334</h2>">
+    <img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png" alt="git流程" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20241101105334.png?size=large 2x" data-title="20241101105334" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">git流程</figcaption>
+  </figure></p>
+<h2 id="相关命令" class="heading-element"><span>相关命令</span>
+  <a href="#%e7%9b%b8%e5%85%b3%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 本地仓库初始化</span>
+</span></span><span class="line"><span class="cl">git init 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将文件提交到暂存区</span>
+</span></span><span class="line"><span class="cl">git add <span class="o">[</span>file name<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">git add .  <span class="c1"># 添加全部修改和新增文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将文件提交到本地仓库</span>
+</span></span><span class="line"><span class="cl">git commit <span class="o">[</span>file name<span class="o">]</span> 
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;commit information&#34;</span> <span class="o">[</span>file name<span class="o">]</span>
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;commit inforamtion&#34;</span> 	<span class="c1"># 提交全部到本地仓库</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加远程仓库，这里是因为存在多个 git 用户所进行的配置，正常为 git@github:czTangt/blog.git</span>
+</span></span><span class="line"><span class="cl">git remote add origin git@github_czTangt:czTangt/blog.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 提交到远程仓库</span>
+</span></span><span class="line"><span class="cl">git push -u origin <span class="o">[</span>branch name<span class="o">]</span>
+</span></span><span class="line"><span class="cl">git push -f <span class="c1"># 强制提交</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 分支操作</span>
+</span></span><span class="line"><span class="cl">git checkout <span class="o">[</span>branch name<span class="o">]</span> <span class="c1"># 切换分支</span>
+</span></span><span class="line"><span class="cl">git branch -a <span class="c1"># 查看所有分支</span>
+</span></span><span class="line"><span class="cl">git checkout -b local_dev origin/remote_dev <span class="c1"># 创建本地分支并于远程分支连接</span>
+</span></span><span class="line"><span class="cl">git push origin --delete remote_dev <span class="c1"># 删除远程分支</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="文件修改" class="heading-element"><span>文件修改</span>
+  <a href="#%e6%96%87%e4%bb%b6%e4%bf%ae%e6%94%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>对于 git 而言，<code>git add .</code> 会将所有修改和新增的文件信息提交到暂存区，之后使用 <code>git commit -m &quot;xxx&quot;</code> 会将暂存区的文件信息提交到本地仓库。但是这种方法是对于新增和修改的文件而言，对于删除的文件信息不会进行更新，所以可以采用两种方案：</p>
+<ol>
+<li>使用 <code>git rm xxx</code> 一个一个手动删除文件（<code>rm</code> 命令没有办法使用 <code>git rm .</code> 一起更新全部的文件删除信息），之后这些文件删除信息就提交到暂存区了，后续就可以继续使用 <code>git commit -m &quot;xxx&quot;</code> 来将代码提交到本地仓库</li>
+<li>使用 <code>git commit -am</code> 命令，该命令会在提交到本地仓库时，先更新修改和删除的文件信息到暂存区（注意它不会提交新增加的文件信息）。所以加了 <code>-a</code> 在 <code>commit</code> 的时候，可以帮助省一步 <code>git add</code>，但是也只是对修改和删除文件有效，新文件还是要 <code>git add</code>，不然就是 <code>untracked</code> 状态。</li>
+</ol>
+<p>综上所述：<code>git add</code> 和 <code>git rm</code> 都是等价的操作，前者添加修改和新增文件信息，后者添加删除文件信息，他们都是将文件信息提交到暂存区，之后使用 <code>git commit -m &quot;xxx&quot;</code> 来将暂存区的文件信息提交到本地仓库，最后使用 <code>git push -u origin main</code> 来提交本地仓库代码到远程仓库的 main 分支。</p>
+<h2 id="远程仓库到自己仓库" class="heading-element"><span>远程仓库到自己仓库</span>
+  <a href="#%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93%e5%88%b0%e8%87%aa%e5%b7%b1%e4%bb%93%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>拉取别人的仓库到自己仓库，主要应对github中没有对应仓库的情况<a href="https://blog.csdn.net/wangyangzhizunwudi/article/details/127330070"target="_blank" rel="external nofollow noopener noreferrer">繁琐指南</a>，存在对应仓库，直接进行 fork，然后在本地添加自己的远程。简单的操作如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> git branch -r <span class="p">|</span> grep -v <span class="s1">&#39;\-&gt;&#39;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> remote<span class="p">;</span> <span class="k">do</span> git branch --track <span class="s2">&#34;</span><span class="si">${</span><span class="nv">remote</span><span class="p">#origin/</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$remote</span><span class="s2">&#34;</span><span class="p">;</span><span class="k">done</span>   <span class="c1"># 获取所有远程分支到本地</span>
+</span></span><span class="line"><span class="cl"> git fetch --all				 	 <span class="c1"># 获取该项目远程库的所有分支及其内容</span>
+</span></span><span class="line"><span class="cl"> git fetch --tags					 <span class="c1"># 获取该项目远程库的标签(没标签就不必了)</span>
+</span></span><span class="line"><span class="cl"> git remote rename origin old-origin <span class="c1"># 将原来的origin重命名一下</span>
+</span></span><span class="line"><span class="cl"> git remote add origin git@172.28.3.77:xs-soc/test-code.git  <span class="c1"># 指定需要迁移到新的目标地址(自己的仓库)</span>
+</span></span><span class="line"><span class="cl"> git push origin --all				  <span class="c1"># 推送所有分支及其内容</span>
+</span></span><span class="line"><span class="cl"> git push --tags					  <span class="c1"># 推送所有标签及其内容</span>
+</span></span><span class="line"><span class="cl"> git remote rm origin                 <span class="c1"># 删除当前远程库</span>
+</span></span><span class="line"><span class="cl"> git branch -M main					  <span class="c1"># 重命名主要分支仓库	</span>
+</span></span><span class="line"><span class="cl"> git push -u origin main			  <span class="c1"># 推送到指定分支</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="git-加速" class="heading-element"><span>Git 加速</span>
+  <a href="#git-%e5%8a%a0%e9%80%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>git失败的原因绝大多数都是网络问题，所以挂代理是最为推荐的选择。以下是起作用的一些方法</p>
+<p>通用方法，更换 git 的代理为 443</p>
+<ul>
+<li><a href="https://www.cnblogs.com/tsalita/p/16181711.html"target="_blank" rel="external nofollow noopener noreferrer">SSH：连接到主机github.com端口22：连接时间超时</a></li>
+</ul>
+<p>但是对于 wsl，直接使用最新 wsl2 共用主机的代理即可（<strong>最为推荐</strong>），不嫌麻烦可以给配置个代理</p>
+<ul>
+<li><a href="https://github.com/microsoft/WSL/issues/10753"target="_blank" rel="external nofollow noopener noreferrer">配置wsl镜像</a></li>
+<li><a href="https://wph.im/199.html"target="_blank" rel="external nofollow noopener noreferrer">Windows10系统下配置WSL2自动走Clash代理</a>，之后clash打开allow lan模式即可</li>
+<li><a href="https://nafx.top/archives/88ca14b9#5-etc-resolv-conf%e9%87%8d%e5%90%af%e4%b8%a2%e5%a4%b1"target="_blank" rel="external nofollow noopener noreferrer">WSL2内使用Windows的v2ray代理 | Nafx&rsquo;s Blog</a>，这是v2的模式，首先最后面设置，然后前面配置bashrc</li>
+</ul>
+<p>有时候最后的方法会起点作用</p>
+<ul>
+<li><a href="https://blog.csdn.net/m0_38068229/article/details/108205928"target="_blank" rel="external nofollow noopener noreferrer">git clone失败解决方案</a></li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-11-04 18:01:55">更新于 2024.11.4&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"><span><a href="/blog/categories/config/git/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 X" data-sharer="twitter" data-url="http://localhost:1313/blog/categories/config/git/" data-title="Some About Git" data-hashtags="config"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:1313/blog/categories/config/git/" data-hashtag="config"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:1313/blog/categories/config/git/" data-title="Some About Git"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/blog/tags/config/" class="post-tag" title="标签 - Config">Config</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/blog/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/blog/categories/config/picgo/" class="post-nav-item" rel="prev" title="VScode PicGo插件配置"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>VScode PicGo插件配置</a><a href="/blog/categories/config/fixit/" class="post-nav-item" rel="next" title="FixIt配置">FixIt配置<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered order-1">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.136.5"><img class="hugo-icon" src="/blog/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.13"><img class="fixit-icon" src="/blog/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright order-2" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><a href="https://github.com/czTangt/blog" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner left d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/blog/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="preload" href="/blog/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/blog/lib/cookieconsent/cookieconsent.min.css"><script src="/blog/lib/autocomplete/autocomplete.min.js" defer></script><script src="/blog/lib/fuse/fuse.min.js" defer></script><script src="/blog/lib/lightgallery/lightgallery.min.js" defer></script><script src="/blog/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/blog/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/blog/lib/sharer/sharer.min.js" async defer></script><script src="/blog/lib/katex/katex.min.js" defer></script><script src="/blog/lib/katex/auto-render.min.js" defer></script><script src="/blog/lib/katex/mhchem.min.js" defer></script><script src="/blog/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/blog/js/codeblock.js" defer></script><script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/blog/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"version":"v0.3.13"};console.log('Page config:', window.config);</script><script src="/blog/js/theme.min.js" defer></script></body>
+</html>

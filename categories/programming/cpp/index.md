@@ -15,10 +15,11 @@ C&#43;&#43; 包含标准 C 语言头文件，对于原本 C 的头文件，C&#43
 ```
 
  ## 命名空间
+ ### 基础知识
  命名空间增加了标识符的使用率，减少因为命名产生的冲突。对于命名空间而言，其中的变量和函数等都是属于自己这个空间的，需要通过标识空间名来指明数据的归属，这样可以使得不同命名空间可以存在同样名称的数据，它们之间不会产生冲突。
  - 声明命名空间：`namespace 空间名{}`，命名空间的声明不能写在函数中
  - 访问数据：`空间名::空间中的成员名`
- - 省略前缀的方式：`using namespace 空间名`
+ - 省略前缀的方式：`using namespace 空间名`，表示从这个地方开始，后面都可以省略前缀。
 
 ```c&#43;&#43;
 #include &lt;iostream&gt;
@@ -71,8 +72,72 @@ int main(){
 }
 ```
 
+### 内联命名空间
+对于嵌套命名空间，访问需要使用多层空间名，但是可以采用内联命名空间的方式直接进行访问。
+```c&#43;&#43;
+#include &lt;iostream&gt;
+using namespace std;
+namespace Version{
+    inline namespace v2017{
+        void showVersion(){
+            cout &lt;&lt; &#34;v2017&#34; &lt;&lt; endl;
+        }
+    }
+
+    namespace v2020{
+        void showVersion(){
+            cout &lt;&lt; &#34;v2020&#34; &lt;&lt; endl;
+        }
+    }
+}
+
+int main(){
+    // 上面采用内联命名空间，即添加了 inline，设置了默认的情况，使得下面的两个语句效果等价。
+    // Version::v2017::showVersion();
+    Version::showVersion();
+}
+```
+
+## 动态内存分配
+C 的动态内存采用函数 `malloc calloc realloc free`，具体可以从 [堆基础](https://www.uf4te.cn/posts/463ab4ed.html) 获取详细介绍。而 C&#43;&#43; 使用 `new delete` 操作符进行动态内存分配。
+
+```c&#43;&#43;
+#include &lt;iostream&gt;
+using namespace std;
+
+void showArr(int* arr, int len){
+    for (int i = 0; i &lt; len; i &#43;&#43;){
+        cout &lt;&lt; arr[i] &lt;&lt; &#34; &#34;;
+    }
+    cout &lt;&lt; endl;
+}
+int main(){
+    // C 内存分配
+    int *p = (int*)calloc(5, sizeof(int));
+    showArr(p, 5);       // calloc 会初始化为 0，所以可以直接打印
+    free(p);
+    p = nullptr; // free 只是清除空间，还需要制空指针，不然就是一个野指针
+
+    // C&#43;&#43; 内存分配
+    int* page = new int; // 申请一个 int
+    *page = 19;          // 这里简单 new 不会初始化为 0，需要自行设置值
+    // int* page = new int(19); // 可以使用 c&#43;&#43; 的括号赋值直接进行赋值
+    cout &lt;&lt; *page &lt;&lt; endl;
+    delete page;
+    page = nullptr;
+
+    page = new int[29];  // 申请一个数组，这里也不会初始化，所以可以采用下面的括号赋值，后面自动初始化为 0；或者使用 for 循环进行赋值
+    // page = new int[29]{1, 2, 3, 7, 12, 12};
+    showArr(page, 29);
+    delete[] page;
+    page = nullptr;
+
+    return 0;
+}
+```
+
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
-> URL: https://czTangt.github.io/blog/categories/programming/cpp/  
+> URL: http://localhost:1313/blog/categories/programming/cpp/  
 
