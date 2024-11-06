@@ -136,8 +136,50 @@ int main(){
 }
 ```
 
+## 枚举类型
+C 和 C&#43;&#43; 都提供了枚举类型，两者有一定的区别。这里主要就是 C&#43;&#43; 的枚举类型，不涉及 C 的。
+
+### enum 枚举类型
+C&#43;&#43; 中的 enum 就是枚举类型的标识符，它只允许赋值枚举值；同时枚举元素会暴露在外部作用域，两个不同枚举类型若是含有相同枚举元素，会产生冲突；不同的枚举可以直接进行比较
+```c&#43;&#43;
+// 定义
+enum WEEK {MON, TUE, WED, THI, FIR, SAT, SUN};
+enum SHAPE {CIRCLE, RECT, POINT, LINE};
+
+// 只允许赋值枚举值，前面的 enum 不进行添加就可以使用
+WEEK today = 3;    // 错误 error C2440：“初始化”：无法从“int”转换为“main::WEEK”
+today = CIRCLE;         // 错误 error C2440：“=”：无法从“main::SHAPE”转换为“main::WEEK”
+
+// 枚举元素暴露在外部作用域
+enumc OTHER {RECT};     // 错误 error C2365：“RECT”：重定义；以前的定义是“枚举数”
+Int RECT = 12;          // 错误同上，但是可以通过枚举名访问指定的枚举属性
+OTHER::RECT;            // 正确
+
+// 不同类型的枚举也可以直接比较
+if (CIRCLE == MON){
+    cout &lt;&lt; &#34;yes&#34; &lt;&lt; endl;
+}
+```
+
+### enum class 强枚举类型
+这里强枚举类型不会将枚举元素暴露在外部作用域，必须通过枚举名去访问；同时不相关的两个枚举类型不能直接比较，编译报错
+
+```c&#43;&#43;
+// 定义
+enum class WEEK {MON, TUE, WED, THI, FIR, SAT, SUN};
+enum class SHAPE {CIRCLE, RECT, POINT, LINE};
+
+// 不暴露在外部作用域
+cout &lt;&lt; SHAPCE::RECT &lt;&lt; endl;   // 输出 1
+
+// 不相关的两个枚举类型不能直接比较
+if (SHAPCE::RECT == WEEK::MON){ // error c2676：二进制“==&#34;：“main::SHAPE&#34;不定义该运算符或到预定义运算符可接收的类型的转换
+    cout &lt;&lt; &#34;yes&#34; &lt;&lt; endl;
+}
+```
+
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
-> URL: http://localhost:1313/blog/categories/programming/cpp/  
+> URL: https://czTangt.github.io/blog/categories/programming/cpp/  
 

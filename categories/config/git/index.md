@@ -79,5 +79,5 @@ git失败的原因绝大多数都是网络问题，所以挂代理是最为推�
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
-> URL: http://localhost:1313/blog/categories/config/git/  
+> URL: https://czTangt.github.io/blog/categories/config/git/  
 

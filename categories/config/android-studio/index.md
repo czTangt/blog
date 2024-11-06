@@ -202,5 +202,5 @@ android {
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
-> URL: http://localhost:1313/blog/categories/config/android-studio/  
+> URL: https://czTangt.github.io/blog/categories/config/android-studio/  
 
