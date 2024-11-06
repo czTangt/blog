@@ -33,5 +33,5 @@
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
-> URL: https://czTangt.github.io/blog/categories/config/fixit/  
+> URL: http://localhost:1313/blog/categories/config/fixit/  
 
