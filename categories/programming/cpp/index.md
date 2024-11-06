@@ -178,6 +178,126 @@ if (SHAPCE::RECT == WEEK::MON){ // error c2676：二进制“==&#34;：“main::
 }
 ```
 
+
+## 内联函数
+函数调用时，需要跳转到函数的地址去执行，执行完成后返回到被调用函数，比较费时，因此，C&#43;&#43;中提供了一种操作方式，允许编译时直接把函数替换到调用处，即内联函数，它没有普通函数调用时的额外开销（压栈，跳转，返回）。在函数前面加上 `inline` 申明为内联函数。
+
+- 内联函数声明时 inline 关键字必须和函数定义结合在一起，否则编译器会直接忽略内联请求。
+- C&#43;&#43; 编译器不一定准许函数的内联请求（只是对编译器的请求，因此编译器可以拒绝）
+- 现代C&#43;&#43;编译器能够进行编译优化，因此一些函数即使没有 inline 声明，也可能被编译器内联编译
+
+
+```c&#43;&#43;
+#include &lt;iostream&gt;
+using namespace std;
+// 宏定义，会在编译的时候（预处理）进行替换，节省空间和时间，效率高，不会类型检查
+#define MAX(a, b) a &gt; b ? a : b;
+// 内联函数，用来替换宏定义。inline 是关键字
+/*
+    1. 不能存在任何形式的循环语句，不能存在过多的条件判断语句
+    2. 函数体不能过于庞大，不能对函数进行取址操作
+    3. 编译器对于内联函数的限制并不是绝对的，内联函数相对于普通函数的优势只是省去了函数调用时压栈，跳转和返回的开销。因此，当函数体的执行开销远大于压栈，跳转和返回所用的开销时，那么内联将无意义。
+*/
+inline int mmax(int a, int b){
+    return a &gt; b ? a : b;
+}
+```
+
+## 强制类型转化
+C 风格的强制类型转换很简单，据使用 Type b = (Type)a 形式进行转换。但是 C 风格的类型转换有不少缺点：万物皆可转，不容易区分，不容易查找代码。因此 C&#43;&#43; 提供了四种类型转换操作符来应对不同场合。
+
+| 类型转换操作符 | 作用 |
+| -------------- | ---- |
+| `static_cast`    | 静态类型转换，编译器做类型检查，基本类型能转换，指针不能 |
+| `reinterpret_cast` | 重新解释类型 |
+| `const_cast`     | 去const属性 |
+| `dynamic_cast`   | 动态类型转换，运行时检查类型安全（转换失败返回nullptr）如子类和父类之间的多态类型转换 |
+
+
+```c&#43;&#43;
+#include &lt;iostream&gt;
+using namespace std;
+
+class Animal
+{
+public:
+    virtual void cry() = 0;
+    virtual ~Animal(){}
+};
+
+class Dog:public Animal
+{
+public:
+    void cry() override{
+        cout &lt;&lt; &#34;狗吠&#34; &lt;&lt; endl;
+    }
+    void seeHome(){
+        cout &lt;&lt; &#34;看家&#34; &lt;&lt; endl;
+    }
+};
+
+class Cat:public Animal
+{
+public:
+    void cry() override{
+        cout &lt;&lt; &#34;猫叫&#34; &lt;&lt; endl;
+    }
+    void catchMouse(){
+        cout &lt;&lt; &#34;抓老鼠&#34; &lt;&lt; endl;
+    }
+};
+
+void obj(Animal* base){
+    base-&gt;cry();
+    // Dog：看家
+    // ((Dog*)base)-&gt;seeHome(); // 这种行为，不会根据传入参数的实际对象进行相应函数调用，而是只要转换就进行调用，也就是这样没有安全检查
+    Dog* dog = dynamic_cast&lt;Dog*&gt;(base); // 这里运行时进行判断，如果转换成功返回子类所在地址，转换失败返回空指针
+    if (dog) {
+		dog-&gt;seeHome();
+    }
+    // Cat：抓老鼠
+    //((Cat*)base)-&gt;catchMouse();
+	Cat* cat = dynamic_cast&lt;Cat*&gt;(base);
+	if (cat) {
+		cat-&gt;catchMouse();
+	} 
+}
+
+int main(){
+    // 1. static_cast 类似 C 风格的强制转换，进行无条件转换，静态类型转换。
+    /*
+        基本数据类型转换，enum，struct，int，char，float 等。static_cast 不能进行无关类型（如非基类和子类）指针之间的转换。
+        可以用于 void* 和其他指针类型之间的转换（但是不能用于非 void 指针之间的转换）
+        不能用于两个不相关类型的转换，如 int 和 int* 之间的转换，虽然二者都是四个字节，但他们一个表示数据，一个表示地址，类型不相关，无法进行转换。
+    */
+    int age = 10;
+    // double d = age; // 隐式类型转换
+    // double d = (double)age; // C 风格转换
+    double d = static_cast&lt;double&gt;(age);
+
+    int* p = &amp;age;
+    // double* pd = (double*)p; // 正确
+    // double* pd = static_cast&lt;double&gt;(p); // error C2440：“static cast”：无法从“int *”转换为“double *”
+    void* pv = static_cast&lt;void*&gt;(p);       // 正确
+    double* pdd = static_cast&lt;double*&gt;(pv); // 正确
+
+    // 2. reinterpret_cast 专门用来转换指针
+    double *pd = reinterpret_cast&lt;double*&gt;(p);  // 正确
+
+    // 3. const_cast 去掉 const 属性
+    const int week = 7;
+    // week = 5; // 错误，不能直接修改常量
+    int&amp; rint = const_cast&lt;int&amp;&gt;(week);
+    rint = 5;   // 正确，可以去掉 const 属性，但是原先的值没有进行修改
+
+    // 4. dynamic_cast 把父类指针转为子类指针（判断父类指针指向的是哪个子类对象）
+    Animal* pdog = new Dog;
+    Animal* pcat = new Cat;
+    obj(pdog);
+    obj(pcat);
+}
+```
+
 ---
 
 > 作者: [czTang](https://github.com/czTangt)  
