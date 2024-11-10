@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=7211&amp;path=blog/livereload" data-no-instant defer></script>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Lexer Re Automata - czTang</title><meta name="author" content="czTang">
+<meta name="description" content="这里记录词法分析，正则表达式，自动机的相关知识。
+"><meta name="keywords" content='compile'>
+  <meta itemprop="name" content="Lexer Re Automata">
+  <meta itemprop="description" content="这里记录词法分析，正则表达式，自动机的相关知识。">
+  <meta itemprop="datePublished" content="2024-10-31T20:08:19+08:00">
+  <meta itemprop="dateModified" content="2024-10-31T20:08:19+08:00">
+  <meta itemprop="wordCount" content="705">
+  <meta itemprop="keywords" content="Compile"><meta property="og:url" content="http://localhost:7211/blog/posts/compile/lexer-re-automata/">
+  <meta property="og:site_name" content="czTang">
+  <meta property="og:title" content="Lexer Re Automata">
+  <meta property="og:description" content="这里记录词法分析，正则表达式，自动机的相关知识。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-10-31T20:08:19+08:00">
+    <meta property="article:modified_time" content="2024-10-31T20:08:19+08:00">
+    <meta property="article:tag" content="Compile">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lexer Re Automata">
+  <meta name="twitter:description" content="这里记录词法分析，正则表达式，自动机的相关知识。">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410312135963.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="http://localhost:7211/blog/posts/compile/lexer-re-automata/" title="Lexer Re Automata - czTang" /><link rel="prev" type="text/html" href="http://localhost:7211/blog/posts/programming/python/" title="Some about Python" /><link rel="next" type="text/html" href="http://localhost:7211/blog/posts/config/picgo/" title="VScode PicGo插件配置" /><link rel="stylesheet" href="/blog/css/style.min.css"><link rel="preload" href="/blog/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/blog/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Lexer Re Automata",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:7211\/blog\/posts\/compile\/lexer-re-automata\/"
+    },"genre": "posts","keywords": "compile","wordcount":  705 ,
+    "url": "http:\/\/localhost:7211\/blog\/posts\/compile\/lexer-re-automata\/","datePublished": "2024-10-31T20:08:19+08:00","dateModified": "2024-10-31T20:08:19+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "czTang"
+      },"description": ""
+  }
+  </script><script src="/blog/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="left">
+    <div class="header-title">
+      <a href="/blog/" title="czTang"><span class="header-title-pre"><i class='fa fa-coffee'>&nbsp</i></span><span class="header-title-text">czTang</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/blog/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
+              <a class="menu-link" href="/blog/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/blog/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/blog/about/"><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/blog/" title="czTang"><span class="header-title-pre"><i class='fa fa-coffee'>&nbsp</i></span><span class="header-title-text">czTang</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/blog/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item"><a class="menu-link" href="/blog/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/blog/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/blog/about/"><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"><div class="details collection-details open">
+      <div class="details-summary collection-summary">
+        <i class="fa-solid fa-layer-group fa-fw" aria-hidden="true"></i>
+        <span class="collection-name" data-collections="合集">Compile</span>
+        <span class="collection-count">1</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></div>
+      <div class="details-content collection-content">
+        <nav>
+          <ul class="collection-list"><li class="collection-item"><span class="active" title="Lexer Re Automata">Lexer Re Automata</span></li></ul>
+          <div class="collection-nav-simple"><i class="fa-solid fa-angle-left fa-fw collection-nav-item text-secondary" aria-hidden="true"></i><span class="text-secondary">1/1</span><i class="fa-solid fa-angle-right fa-fw collection-nav-item text-secondary" aria-hidden="true"></i></div>
+        </nav>
+      </div>
+    </div></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Lexer Re Automata</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://github.com/czTangt" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="/blog/images/avatar.jpg" alt="czTang" data-title="czTang" width="20" height="20" class="avatar" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;czTang</a></span><span class="post-included-in">&nbsp;收录于 <a href="/blog/categories/compile/" class="post-category" title="分类 - Compile"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Compile</a> 和 <a href="/blog/collections/compile/" class="post-collection" title="合集 - Compile"><i class="fa-solid fa-layer-group fa-fw" aria-hidden="true"></i> Compile</a></span></div><div class="post-meta-line"><span title="发布于 2024-10-31 20:08:19"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024.10.31">2024.10.31</time></span>&nbsp;<span title="705 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 800 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#正则表达式与自动机理论">正则表达式与自动机理论</a>
+      <ul>
+        <li><a href="#课程目标">课程目标</a></li>
+        <li><a href="#编程语言介绍">编程语言介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#re">RE</a>
+      <ul>
+        <li><a href="#语法">语法</a></li>
+        <li><a href="#语义">语义</a></li>
+        <li><a href="#符号">符号</a></li>
+      </ul>
+    </li>
+    <li><a href="#自动机">自动机</a>
+      <ul>
+        <li><a href="#nfa">NFA</a>
+          <ul>
+            <li><a href="#语法-1">语法</a></li>
+            <li><a href="#语义-1">语义</a></li>
+          </ul>
+        </li>
+        <li><a href="#dfa">DFA</a>
+          <ul>
+            <li><a href="#语法-2">语法</a></li>
+            <li><a href="#语义-2">语义</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#相互转换">相互转换</a>
+      <ul>
+        <li><a href="#re---nfa">RE -&gt; NFA</a></li>
+        <li><a href="#nfa---dfa">NFA -&gt; DFA</a>
+          <ul>
+            <li><a href="#原理">原理</a></li>
+            <li><a href="#形式化描述子集构造法">形式化描述子集构造法</a></li>
+          </ul>
+        </li>
+        <li><a href="#dfa最小化">DFA最小化</a>
+          <ul>
+            <li><a href="#方法">方法</a></li>
+            <li><a href="#注意">注意</a></li>
+          </ul>
+        </li>
+        <li><a href="#dfa---词法分析器">DFA -&gt; 词法分析器</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>这里记录词法分析，正则表达式，自动机的相关知识。</p>
+<h2 id="正则表达式与自动机理论" class="heading-element"><span>正则表达式与自动机理论</span>
+  <a href="#%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f%e4%b8%8e%e8%87%aa%e5%8a%a8%e6%9c%ba%e7%90%86%e8%ae%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="课程目标" class="heading-element"><span>课程目标</span>
+  <a href="#%e8%af%be%e7%a8%8b%e7%9b%ae%e6%a0%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这里讲解怎么写一个自动化词法分析器生成器。根据前面的理论，我们使用 ANTLR4 来<strong>生成词法分析器</strong>，其实质上是我们使用 ANTLR4 利用正则表达式（regular expression -&gt; RE）的规则来进行生成词法分析器。同时我们还学习了利用 java 来<strong>手写词法分析器</strong>，实质就是在使用 java 代码模拟状态转移图，它也就是自动机。那么我们来看 ANTLR4 原理，他就是把 <code>.g4</code> 文件转化为 <code>.java</code> 文件，也就是把正则表达式转化为了自动机，然后通过模拟自动机就可以得到词法分析器了。
+因此我们的目标就是通过正则表达式来直接得到得到一个词法分析器。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png" alt="conversion" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">conversion</figcaption>
+  </figure></p>
+<p>由上图，我们构建词法分析器就是把 RE 转化为 DFA（有穷状态自动机 Deterministic FInite Automata），然后再转化为词法分析器，但是这个过程往往是困难的，所以我们采用简略的方法，通过先转化为 NFA（不确定的又穷状态自动机Nondeteeministic Finite Automata），再转化为 DFA，再进行后续的操作。</p>
+<h3 id="编程语言介绍" class="heading-element"><span>编程语言介绍</span>
+  <a href="#%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80%e4%bb%8b%e7%bb%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong>语言是字符串构成的集合。</strong> 根据这句高度抽象的结论，我们会一层层进行解剖。</p>
+<ul>
+<li>字符
+<ul>
+<li>字母表 $\Sigma$ 是一个有限的符号集合，符号没有意义，它的语义是后来自己赋予的。</li>
+</ul>
+</li>
+<li>字符串
+<ul>
+<li>字符表 $\Sigma$ 上的<strong>串(s)</strong> 是由 $\Sigma$ 中符号构成的一个<strong>有穷</strong>序列。</li>
+<li>其中 $\epsilon$ 是空串，我们定义它为零，即 $|\epsilon| = 0$</li>
+</ul>
+</li>
+<li>字符串之间存在运算
+<ul>
+<li><strong>连接</strong>运算， $x = day, y = houce, xy = dayhouce, \epsilon s = s \epsilon = s$</li>
+<li><strong>指数</strong>运算，$s^{0} \triangleq \epsilon$，$s^{i} \triangleq ss^{i-1}, i&gt;0$，这里存在上标就是连接的意思</li>
+</ul>
+</li>
+<li>语言
+<ul>
+<li>语言是给定字母表 $\Sigma$ 上一个任意的<strong>可数</strong>的串集合。</li>
+<li>$\varnothing$，这一个是空集，什么语言都没有；${ \epsilon }$，这个里面有一个语言，不过是个空串</li>
+<li>举例：id：${a,b,c,d,a1}$；ws：${blank, tab, newline }$，if：${ if }$</li>
+<li>我们知道语言是串的集合，正因为是集合，所以我们可以通过集合操作<strong>构造</strong>新的语言</li>
+</ul>
+</li>
+</ul>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202146130.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202146130.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202146130.png" alt="rules" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202146130.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202146130.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202146130.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">rules</figcaption>
+  </figure></p>
+<h2 id="re" class="heading-element"><span>RE</span>
+  <a href="#re" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>每个正则表达式 r 对应一个正则语言 <strong>L(r)</strong>。正则表达式是<strong>语法</strong>（ID：<code>[a-zA-Z][a-zA-Z0-9]*</code>），正则语言是<strong>语义</strong>（<code>{a1,a2,ab,……}</code>）</p>
+<h3 id="语法" class="heading-element"><span>语法</span>
+  <a href="#%e8%af%ad%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>给定字母表，$\Sigma$ 上的正则表达式由且仅由以下规则定义：</p>
+<ol>
+<li>$\epsilon$ 是正则表达式</li>
+<li>$\forall a \in \Sigma$，a 是正则表达式</li>
+<li>如果 r 是正则表达式，则 (r) 是正则表达式</li>
+<li>如果 r 与 s 是正则表达式，则 r | s，rs，r* 也是正则表达式</li>
+<li>运算优先级：$() \succ * \succ 连接 \succ |$ ，例子：$(a) \mid ((b)^{*} (c)) \equiv a | b^{*} c$</li>
+</ol>
+<h3 id="语义" class="heading-element"><span>语义</span>
+  <a href="#%e8%af%ad%e4%b9%89" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>正则表达式对应的正则语言 $L(r)$</p>
+<ol>
+<li>$L(\epsilon) = { \epsilon}$</li>
+<li>$L(a) = a, \forall a \in \Sigma$</li>
+<li>$L((r)) = L(r)$</li>
+<li>$L(r|s)=L(r) \cup L(s)\quad L(rs)=L(r)L(s)\quad L(r^{*})=(L(r))^{*}$</li>
+</ol>
+<h3 id="符号" class="heading-element"><span>符号</span>
+  <a href="#%e7%ac%a6%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202205123.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202205123.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202205123.png" alt="symbol" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202205123.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202205123.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202205123.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">symbol</figcaption>
+  </figure></p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202206620.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202206620.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202206620.png" alt="symbol" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202206620.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202206620.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202206620.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">symbol</figcaption>
+  </figure></p>
+<h2 id="自动机" class="heading-element"><span>自动机</span>
+  <a href="#%e8%87%aa%e5%8a%a8%e6%9c%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="nfa" class="heading-element"><span>NFA</span>
+  <a href="#nfa" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="语法-1" class="heading-element"><span>语法</span>
+  <a href="#%e8%af%ad%e6%b3%95-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>非确定性有穷自动机 $\mathcal{A}$  是一个五元组 $\mathcal{A} = (\Sigma, S, s_0, \delta, F)$</p>
+<ol>
+<li>字母表 $\Sigma (\epsilon \notin \Sigma)$</li>
+<li>有穷的<strong>状态集合</strong> $S$</li>
+<li><strong>唯一</strong>的初始状态 $s_0 \in S$，这里的唯一不是强求，因为可以转化为唯一形态，转化方法就是前面再添加ige初始状态，然后通过 ${\epsilon }$ 边转移到原始初始状态即可。</li>
+<li><strong>状态转移函数</strong> $\delta$，$\delta: S \times (\Sigma \cup {\epsilon}) \rightarrow 2^S$</li>
+<li>接受状态集合 $F \subseteq S$，下图的 3 就是接受状态</li>
+</ol>
+<ul>
+<li>这里非确定一个就是指接受统一字符的状态转移不唯一，如下图的 0 号节点，它接受字符 a 可以跑到两个状态上去；另一个就是可能存在 ${ \epsilon }$ 边，在没有字符驱动的情况下自发的跑到另外一个状态。</li>
+</ul>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202223241.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202223241.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202223241.png" alt="state transfer" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202223241.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202223241.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202223241.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">state transfer</figcaption>
+  </figure></p>
+<p>上面的状态转移图没有规定如果碰到其他的字符该怎么处理，所以下图就约定所有没有对应出边的字符默认指向 空状态 $\varnothing$，也就是  $(\Sigma \cup {\epsilon})$，它表示达到自身，也意味着一个死状态。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202251440.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202251440.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202251440.png" alt="state transfer" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202251440.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202251440.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202251440.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">state transfer</figcaption>
+  </figure></p>
+<h4 id="语义-1" class="heading-element"><span>语义</span>
+  <a href="#%e8%af%ad%e4%b9%89-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>有穷自动机是一类及其简单的计算装置，它可以识别（接收/拒绝）$\Sigma$ 上的字符串</p>
+<ul>
+<li>接收
+<ul>
+<li>（非确定性）有穷自动机 $\mathcal{A}$ 接受字符串 x，当且仅当存在一条从开始状态 $s_0$ 到<strong>某个</strong>接受状态 $f \in F$ 、标号为 x 的路径。</li>
+<li>对于上面的状态转移图，只有 3 是接受状态，因此 $aabb \in L(\mathcal{a}), ababab \notin L(\mathcal{A})$</li>
+<li>因此，$\mathcal{A}$ 定义了一种语言 $L(\mathcal{A})$：它能接受的所有字符串构成的集合。所以根据上方状态转移图，可以得到自动机语言：$L(\mathcal{A}) = L((a|b)^*abb)$
+由上面的语义，我们可以得到自动机的两个基本问题</li>
+</ul>
+</li>
+<li>Membership 问题：给定字符串 $x$，$x \in L(\mathcal{A})?$</li>
+<li>$L(\mathcal{A})$ 究竟是什么？</li>
+</ul>
+<h3 id="dfa" class="heading-element"><span>DFA</span>
+  <a href="#dfa" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="语法-2" class="heading-element"><span>语法</span>
+  <a href="#%e8%af%ad%e6%b3%95-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>确定性有穷自动机 $\mathcal{A}$  是一个五元组 $\mathcal{A} = (\Sigma, S, s_0, \delta, F)$</p>
+<ol>
+<li>字母表 $\Sigma (\epsilon \notin \Sigma)$</li>
+<li>有穷的<strong>状态集合</strong> $S$</li>
+<li><strong>唯一</strong>的初始状态 $s_0 \in S$，这个唯一是一定需要的</li>
+<li><strong>状态转移函数</strong> $\delta$，$\delta: S \times \Sigma \rightarrow S$</li>
+<li>接受状态集合 $F \subseteq S$，下图的 3 就是接受状态</li>
+</ol>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202317792.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202317792.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202317792.png" alt="state transfer" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202317792.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202317792.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410202317792.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">state transfer</figcaption>
+  </figure></p>
+<p>这里的约定就是：所有没有对应出边的字符串默认指向一个“<strong>死状态</strong>”</p>
+<h4 id="语义-2" class="heading-element"><span>语义</span>
+  <a href="#%e8%af%ad%e4%b9%89-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>上图的自动机语言还是 $L(\mathcal{A}) = L((a|b)^*abb)$，也就是上面的 NFA 和下面的 DFA 等价的。因此可以看出 NFA 适合去表达一个语言，容易得出语言是什么；而 DFA 则是因为状态的转移确定，适合写词法分析器。即 NFA 简介易于理解，便于描述语言 $L(\mathcal{A})$；DFA易于判断$x \in L(\mathcal{A})$，适合产生词法分析器。那么转换就是 $RE \Rightarrow NFA \Rightarrow DFA \Rightarrow$ 词法分析器。</p>
+<h2 id="相互转换" class="heading-element"><span>相互转换</span>
+  <a href="#%e7%9b%b8%e4%ba%92%e8%bd%ac%e6%8d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这里就是根据下面这张图，使得正则表达式和自动机之间相互转换。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png" alt="conversion" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410201955612.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">conversion</figcaption>
+  </figure></p>
+<h3 id="re---nfa" class="heading-element"><span>RE -&gt; NFA</span>
+  <a href="#re---nfa" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>采用 Thompson 构造法，使得 $r \Rightarrow NFA$，要求 $L(N(r)) = L(r)$，即两个语言等价。这里就是对于正则表达式语法的每个规则来定义自动机，然后最后将这些自动机按规则进行组合就得到了 NFA。
+$N(r)$ 的性质以及 Thompson 构造法复杂度分析</p>
+<ol>
+<li>$N(r)$ 的开始状态和接受状态均唯一</li>
+<li>开始状态没有入边，接受状态没有出边</li>
+<li>$N(r)$ 的状态数 $|S| &lt; 2 \times |r|$（$|r|: r$ 中运算符和运算分量的总和）</li>
+<li>每个状态最多有两个 $\epsilon \text{-}$ 入边与两个 $\epsilon \text{-}$ 出边</li>
+<li>$\forall a \in \Sigma$，每个状态最多有一个 $a \text{-}$ 入边与一个 $a\text{-}$ 出边
+自动机构造如下：</li>
+</ol>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210950686.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210950686.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210950686.png" alt="Thompson" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210950686.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210950686.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210950686.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">Thompson</figcaption>
+  </figure></p>
+<h3 id="nfa---dfa" class="heading-element"><span>NFA -&gt; DFA</span>
+  <a href="#nfa---dfa" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="原理" class="heading-element"><span>原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>采用子集构造法，也就是用 DFA 模拟 NFA。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210952811.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210952811.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210952811.png" alt="子集构造法" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210952811.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210952811.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210952811.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">子集构造法</figcaption>
+  </figure></p>
+<p>下面就是从 NFA 到 DFA 的构造对应表，有了这张表就有了自动机。之所以是子集构造法，是因为构造出来的 DFA 对应于 NFA 的一个状态子集。同时这里因为在 NFA 中 10 是接受状态，所以在 DFA 中，对应的 E 也是接收状态。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210959201.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210959201.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210959201.png" alt="构造对应表" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210959201.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210959201.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410210959201.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">构造对应表</figcaption>
+  </figure></p>
+<h4 id="形式化描述子集构造法" class="heading-element"><span>形式化描述子集构造法</span>
+  <a href="#%e5%bd%a2%e5%bc%8f%e5%8c%96%e6%8f%8f%e8%bf%b0%e5%ad%90%e9%9b%86%e6%9e%84%e9%80%a0%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>这里根据上图的转化，会得到两个重要的公式：</p>
+<ul>
+<li>$\epsilon$ 闭包：从状态 s 开始，只通过 $\epsilon \text{-}$ 转移可达的状态集合
+<ul>
+<li>$\epsilon\text{-closure}(s)={t\in S_N|s\xrightarrow{\epsilon^*}t}$，这个公式的含义就是把 NFA 中的初始状态归结于 DFA 中的初始状态。上图中 NFA 的 ${0,1,2,4,7}$，它是初始状态，在 NFA 中，从 0 开始，通过 $\epsilon$ 边进行连接的状态在 DFA 中都是初始状态。之后进行扩展操作 $\epsilon \text{-closure(T)} = \bigcup_{s \in T}\epsilon \text{-closure(s)}$，这个就是把上面的初始状态都添加在一起，转化为了集合形式，即状态集合，它为下面的 move 公式提供操作变量。</li>
+<li>$\text{move(T,a)} = \bigcup_{s\in T} \delta(s,a)$，这个公式就是根据集合的当前状态，然后根据转移函数 $\delta$，逐个查看集合中每个元素在<strong>同一个字符</strong>作用的目标元素是什么，最后将目标元素添加到新集合中，这个集合就是 DFA 中的下一个状态。
+之后就可以形式化描述子集构造法：子集构造法($N \rightarrow D$) 的<strong>原理</strong>：
+$$
+\begin{array}{l}
+N: (\Sigma_N, S_N, n_0, \delta_N, F_N) \\
+D: (\Sigma_D, S_D, d_0, \delta_D, F_D) \\
+\Sigma_{D} = \Sigma_{N} \\
+S_{D} \subseteq 2^{S_{N}} \quad (\forall s_{D} \in S_{D} : s_{D} \subseteq S_{N})
+\end{array}
+$$</li>
+</ul>
+</li>
+<li>初始状态：$d_{0} = \epsilon \text{-closure}(n_{0})$</li>
+<li>状态转移：$\forall a \in \Sigma_{D} : \delta_{D}(s_{D}, a) = \epsilon\text{-closure}(\operatorname{move}(s_{D}, a))$</li>
+<li>接受状态集：$F_{\mathcal{D}} = { s_{D} \in S_{\mathcal{D}} \mid \exists f \in F_N \colon f \in s_{D} }$
+子集构造法的复杂度分析：（$|S_N=n|$，下面的符号就是算法分析中的分析符号）
+$$\left|S_{D}\right| = \Theta\left(2^{n}\right) = O\left(2^{n}\right) \cap \Omega\left(2^{n}\right)$$
+<strong>对于任何算法</strong>，最坏情况下，$|S_{D}| = \Omega\left(2^{n}\right)$。</li>
+</ul>
+<h3 id="dfa最小化" class="heading-element"><span>DFA最小化</span>
+  <a href="#dfa%e6%9c%80%e5%b0%8f%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="方法" class="heading-element"><span>方法</span>
+  <a href="#%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>我们还是查看之前使用 NFA -&gt; DFA 的转换图来看，下面的 DFA 就是使用子集构造法将 NFA 转化而来的，毫无疑问，与上面的图相比，它不是最小的，所以这里需要探究的就是如何将 DFA 转化为最小化的形式。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211050216.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211050216.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211050216.png" alt="conversion" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211050216.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211050216.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211050216.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">conversion</figcaption>
+  </figure></p>
+<p>这里<strong>DFA最小化算法</strong>基本思想：<strong>等价</strong>的状态可以合并。对于等价而言，如果存在某个能区分状态 s 与 t 的字符串，则称 s 与 t 是<strong>可区分的</strong>；否则，称 s 与 t 是<strong>等价的</strong>。这里的字符串 x 区分状态 s 与 t，就是指如果分别从 s 与 t 出发，沿着标号为 x 的路径到达的两个状态中只有一个是接受状态，则称<strong>区分</strong>了状态 s 与 t，也就是s 与 t 不等价。
+所以状态等价就是说，对于两个状态而言，在<strong>任意同一个字符</strong>的驱动下从当前状态进行转换，转换后的状态也是等价的。它可以用下面的公式进行表示：
+$$
+\begin{array}{l}
+s \sim t \iff \forall a \in \Sigma. \left( (s \xrightarrow{a} s&rsquo;) \land (t \xrightarrow{a} t&rsquo;) \implies (s&rsquo; \sim t&rsquo;) \right)\\
+s \nsim t \iff \exists a \in \Sigma. \left( (s \xrightarrow{a} s&rsquo;) \land (t \xrightarrow{a} t&rsquo;) \land (s&rsquo; \nsim t&rsquo;) \right)
+\end{array}
+$$
+基于该定义，不断<strong>合并</strong>等价的状态，直到无法合并为止。但是我们的定义是一个递归的，不知道一开始要从什么地方入手，同时我们又得到所有的接受状态并不是等价的。所以这里采取的办法就是划分，利用反例公式 $s \nsim t \Longleftrightarrow \exists a \in \Sigma. ( s \xrightarrow{a} s&rsquo; ) \land ( t \xrightarrow{a} t&rsquo; ) \land ( s&rsquo; \nsim t&rsquo; )$ 进行划分，而非合并。也就是首先根据接受状态与非接受状态必定不等价先划分为两类 $\Pi = {F, S \setminus F}$，然后在这个基础上根据上面的反例公式进行分裂，直至再也无法<strong>划分</strong>为止，这里就到达了<strong>不动点</strong>，之后就是将同一等价类里的状态<strong>合并</strong>。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211200842.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211200842.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211200842.png" alt="划分步骤" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211200842.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211200842.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211200842.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">划分步骤</figcaption>
+  </figure></p>
+<p>上面就是分裂的过程，在 $\Pi_0$ 到 $\Pi_1$ 的过程中，${A,B,C}$ 和 ${D}$ 在经过 b 进行传递的状态是不等价的，此时 D 转移到 E 上了，E 输出 $S \setminus F$，所以不等价。之后的操作也是这样挑选字符看转移后的状态处于哪一个集合中，如果不在本身的集合，那么就是不等价，需要进行分裂。</p>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211203861.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211203861.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211203861.png" alt="合并" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211203861.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211203861.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211203861.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">合并</figcaption>
+  </figure></p>
+<p>上图就是最后的分裂之后再合并得到最小化 DFA 的转换。</p>
+<h4 id="注意" class="heading-element"><span>注意</span>
+  <a href="#%e6%b3%a8%e6%84%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><ul>
+<li>需要注意处理&quot;<strong>死状态</strong>&quot;，也就是指向 ${ \varnothing}$ 的一些没有画出来的边，在进行分裂时需要添加上，即${F, S \setminus F, { \varnothing }}$</li>
+<li>刚刚的算法不适用于 NFA 最小化，NFA最小化问题是 PSPACE-complete 的，复杂度很高。</li>
+</ul>
+<h3 id="dfa---词法分析器" class="heading-element"><span>DFA -&gt; 词法分析器</span>
+  <a href="#dfa---%e8%af%8d%e6%b3%95%e5%88%86%e6%9e%90%e5%99%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这里对于词法分析器的构造，需要注意一下几个要求，然后按照之前使用 java 模拟的方法进行构造即可：</p>
+<ul>
+<li>需要满足<strong>最前优先匹配</strong>和<strong>最长优先匹配</strong>，与此同时，因为需要生成词法分析器的特定目的，所以要保留各个 NFA 的<strong>接受状态</strong>的信息，表明匹配的是什么正则表达式</li>
+<li>需要<strong>消除</strong> &ldquo;死状态&rdquo;，避免词法分析器徒劳消耗输入流。如果加上死状态，那么词法分析器就有可能走这条路径，然后会进行一直匹配，最后匹配出的也是死状态，妨碍正确匹配。</li>
+<li>进行模拟的过程如下图所示，和之前 java 模拟的过程一样。</li>
+</ul>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211302285.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211302285.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211302285.png" alt="模拟过程" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211302285.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211302285.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211302285.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">模拟过程</figcaption>
+  </figure></p>
+<ul>
+<li>最后需要注意初始划分需要考虑不同的<strong>词法单元</strong>。之前的划分按照接受状态和非接受状态进行划分，但是这里需要写词法分析器，所以最后的接收状态对应了不同的词法单元，所以也需要进一步划分为不同的集合。</li>
+</ul>
+<p><figure><a class="lightgallery" href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211304789.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211304789.png?size=small" data-sub-html="<h2>compile</h2>"><img loading="lazy" src="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211304789.png" alt="特定词法单元" srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211304789.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211304789.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410211304789.png?size=large 2x" data-title="compile" style="background: url(/blog/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></a><figcaption class="image-caption">特定词法单元</figcaption>
+  </figure></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-10-31 20:08:19">更新于 2024.10.31&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"><span><a href="https://github.com/czTangt/blog.git/blob/main/content/posts%5ccompile%5clexer-re-automata.md?plain=1" title="查看源码"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-source">查看源码</a></span><span><a href="https://github.com/czTangt/blog.git/edit/main/content/posts%5ccompile%5clexer-re-automata.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span><span><a href="https://github.com/czTangt/blog.git/issues/new?title=[BUG]%20Lexer&#43;Re&#43;Automata&amp;body=%7cField%7cValue%7c%0A%7c-%7c-%7c%0A%7cTitle%7cLexer&#43;Re&#43;Automata%7c%0A%7cURL%7chttp://localhost:7211/blog/posts/compile/lexer-re-automata/%7c%0A%7cFilename%7chttps://github.com/czTangt/blog.git/blob/main/content/posts%5ccompile%5clexer-re-automata.md?plain=1%7c" title="报告问题"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-report">报告问题</a></span></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 X" data-sharer="twitter" data-url="http://localhost:7211/blog/posts/compile/lexer-re-automata/" data-title="Lexer Re Automata" data-hashtags="compile"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://localhost:7211/blog/posts/compile/lexer-re-automata/" data-hashtag="compile"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://localhost:7211/blog/posts/compile/lexer-re-automata/" data-title="Lexer Re Automata"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/blog/tags/compile/" class="post-tag" title="标签 - Compile">Compile</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/blog/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/blog/posts/programming/python/" class="post-nav-item" rel="prev" title="Some About Python"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Some About Python</a><a href="/blog/posts/config/picgo/" class="post-nav-item" rel="next" title="VScode PicGo插件配置">VScode PicGo插件配置<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered order-1">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.136.5"><img class="hugo-icon" src="/blog/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.14"><img class="fixit-icon" src="/blog/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright order-2" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><a href="https://github.com/czTangt/blog" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner left d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/blog/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="preload" href="/blog/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/blog/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/blog/lib/cookieconsent/cookieconsent.min.css"><script src="/blog/lib/autocomplete/autocomplete.min.js" defer></script><script src="/blog/lib/fuse/fuse.min.js" defer></script><script src="/blog/lib/lightgallery/lightgallery.min.js" defer></script><script src="/blog/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/blog/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/blog/lib/sharer/sharer.min.js" async defer></script><script src="/blog/lib/katex/katex.min.js" defer></script><script src="/blog/lib/katex/auto-render.min.js" defer></script><script src="/blog/lib/katex/mhchem.min.js" defer></script><script src="/blog/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/blog/js/codeblock.js" defer></script><script src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/blog/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"version":"v0.3.14"};console.log('Page config:', window.config);</script><script src="/blog/js/theme.min.js" defer></script></body>
+</html>
