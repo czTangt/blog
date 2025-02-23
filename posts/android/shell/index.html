@@ -1,0 +1,823 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><meta name=robots content="noodp"><title>Shell - czTang</title><meta name=author content="czTang">
+<meta name=description content="记录一下对于安卓壳的学习
+"><meta name=keywords content='android,reverse'><meta itemprop=name content="Shell"><meta itemprop=description content="记录一下对于安卓壳的学习"><meta itemprop=datePublished content="2025-02-23T19:27:39+08:00"><meta itemprop=dateModified content="2025-02-23T19:27:39+08:00"><meta itemprop=wordCount content="3547"><meta itemprop=keywords content="Android,Reverse"><meta property="og:url" content="https://czTangt.github.io/blog/posts/android/shell/"><meta property="og:site_name" content="czTang"><meta property="og:title" content="Shell"><meta property="og:description" content="记录一下对于安卓壳的学习"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-02-23T19:27:39+08:00"><meta property="article:modified_time" content="2025-02-23T19:27:39+08:00"><meta property="article:tag" content="Android"><meta property="article:tag" content="Reverse"><meta name=twitter:card content="summary"><meta name=twitter:title content="Shell"><meta name=twitter:description content="记录一下对于安卓壳的学习"><meta name=application-name content="FixIt"><meta name=apple-mobile-web-app-title content="FixIt"><meta name=theme-color data-light=#f8f8f8 data-dark=#252627 content="#f8f8f8"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=https://nuthecz.oss-cn-hangzhou.aliyuncs.com/file/202410312135963.svg><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=canonical type=text/html href=https://czTangt.github.io/blog/posts/android/shell/ title="Shell - czTang"><link rel=prev type=text/html href=https://czTangt.github.io/blog/posts/reverse/windows/ title=Windows><link rel=stylesheet href=/blog/css/style.min.css><link rel=preload href=/blog/lib/fontawesome-free/all.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/blog/lib/animate/animate.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/animate/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Shell","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/czTangt.github.io\/blog\/posts\/android\/shell\/"},"genre":"posts","keywords":"android, reverse","wordcount":3547,"url":"https:\/\/czTangt.github.io\/blog\/posts\/android\/shell\/","datePublished":"2025-02-23T19:27:39+08:00","dateModified":"2025-02-23T19:27:39+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"czTang"},"description":""}</script><script src=/blog/js/head/color-scheme.min.js></script></head><body data-header-desktop=sticky data-header-mobile=auto><div class=wrapper data-page-style=normal><header class="desktop animate__faster" id=header-desktop><div class=header-wrapper data-github-corner=left><div class=header-title><a href=/blog/ title=czTang><span class=header-title-pre><i class='fa fa-coffee'>&nbsp</i></span><span class=header-title-text>czTang</span></a><span class=header-subtitle></span></div><nav><ul class=menu><li class=menu-item><a class=menu-link href=/blog/archives/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> Archives</a></li><li class=menu-item><a class=menu-link href=/blog/categories/><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden=true></i> Categories</a></li><li class=menu-item><a class=menu-link href=/blog/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> Tags</a></li><li class=menu-item><a class=menu-link href=/blog/about/><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden=true></i> About</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容…… id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></li><li class="menu-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></li></ul></nav></div></header><header class="mobile animate__faster" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/blog/ title=czTang><span class=header-title-pre><i class='fa fa-coffee'>&nbsp</i></span><span class=header-title-text>czTang</span></a><span class=header-subtitle></span></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><nav><ul class=menu id=menu-mobile><li class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容…… id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fa-solid fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fa-solid fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></li><li class=menu-item><a class=menu-link href=/blog/archives/><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden=true></i> Archives</a></li><li class=menu-item><a class=menu-link href=/blog/categories/><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden=true></i> Categories</a></li><li class=menu-item><a class=menu-link href=/blog/tags/><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden=true></i> Tags</a></li><li class=menu-item><a class=menu-link href=/blog/about/><i class="fa-solid fa-user fa-fw fa-sm" aria-hidden=true></i> About</a></li><li class="menu-item menu-system"><span class="menu-system-item theme-switch" title=切换主题><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></span></li></ul></nav></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=container><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label=合集><div class="details collection-details open"><div class="details-summary collection-summary"><i class="fa-solid fa-layer-group fa-fw" aria-hidden=true></i>
+<span class=collection-name title=合集>Reverse</span>
+<span class=collection-count>6</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden=true></i></div><div class="details-content collection-content"><nav><ul class=collection-list><li class=collection-item><a href=/blog/posts/android/elf/ title="ELF 解析">ELF 解析</a></li><li class=collection-item><a href=/blog/posts/reverse/algorithm/ title=逆向中的算法>逆向中的算法</a></li><li class=collection-item><a href=/blog/posts/android/unidbg/ title="Unidbg 记录">Unidbg 记录</a></li><li class=collection-item><a href=/blog/posts/android/android-reverse/ title="Android Reverse">Android Reverse</a></li><li class=collection-item><a href=/blog/posts/reverse/windows/ title=Windows>Windows</a></li><li class=collection-item><span class=active title=Shell>Shell</span></li></ul><div class=collection-nav-simple><a href=/blog/posts/reverse/windows/ class=collection-nav-item rel=prev title=Windows><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i></a><span class=text-secondary>6/6</span><i class="fa-solid fa-angle-right fa-fw collection-nav-item text-secondary" aria-hidden=true></i></div></nav></div></div></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>Shell</span></h1></div><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://github.com/czTangt title=作者 target=_blank rel="external nofollow noopener noreferrer author" class=author><img loading=lazy src=/blog/images/avatar.jpg alt=czTang data-title=czTang width=20 height=20 class=avatar style="background:url(/blog/images/loading.min.svg)no-repeat 50%" onload='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e);this.dataset.lazyloaded=""' onerror='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e)'>&nbsp;czTang</a></span><span class=post-included-in>&nbsp;收录于 <a href=/blog/categories/android/ class=post-category title="分类 - Android"><i class="fa-regular fa-folder fa-fw" aria-hidden=true></i> Android</a> 和 <a href=/blog/collections/reverse/ class=post-collection title="合集 - Reverse"><i class="fa-solid fa-layer-group fa-fw" aria-hidden=true></i> Reverse</a></span></div><div class=post-meta-line><span title="发布于 2025-02-23 19:27:39"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden=true></i><time datetime=2025.2.23>2025.2.23</time></span>&nbsp;<span title="3547 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden=true></i>约 3600 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden=true></i>预计阅读 8 分钟</span>&nbsp;</div></div><div class="details toc" id=toc-static data-kept=false><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#app-的类加载器>App 的类加载器</a></li><li><a href=#壳的动态加载与修复>壳的动态加载与修复</a></li></ul></nav></div></div><div class=content id=content><p>记录一下对于安卓壳的学习</p><blockquote><p><a href=https://www.fup1p1.cn/archives/android-ni-xiang-android-ni-xiang-ling-ji-chu-xue-xi target=_blank rel="external nofollow noopener noreferrer">学习链接</a></p></blockquote><h2 id=app-的类加载器 class=heading-element><span>App 的类加载器</span>
+<a href=#app-%e7%9a%84%e7%b1%bb%e5%8a%a0%e8%bd%bd%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>下面代码用于获取类加载器的层次结构，同时加载调用一个 dex 文件中的某个函数。这里通过 <code>classLoadingOrder()</code> 可以看出当前的类加载器层次结构，可以看到当前的类加载器为 <code>PathClassLoader</code>，父类加载器为 <code>BootClassLoader</code>，同时只有两层结构。而通过 <code>loadDex()</code> 则可以加载一个普通普通的函数，注意这个函数不能存在生命周期，即不是 Activity，否则就会加载失败。而加载一个 Activity 函数则是下面 <strong>壳的动态加载与修复</strong> 涉及的内容。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.cztang.shell</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.content.Context</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.os.Environment</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.util.Log</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>androidx.annotation.NonNull</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.io.File</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.lang.reflect.InvocationTargetException</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.lang.reflect.Method</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>dalvik.system.DexClassLoader</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>LoadCommonClass</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>TAG</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&#34;loadClass&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>MainActivity</span><span class=w> </span><span class=n>mainActivity</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 构造函数，初始化主活动引用</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>LoadCommonClass</span><span class=p>(</span><span class=n>MainActivity</span><span class=w> </span><span class=n>mainActivity</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>mainActivity</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>mainActivity</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 加载指定的 dex 文件并调用其中的 test01 类的 testFunc 方法。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param filename 外部 dex 文件的文件名
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>loadDex</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>filename</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>dexFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>File</span><span class=p>(</span><span class=n>Environment</span><span class=p>.</span><span class=na>getExternalStorageDirectory</span><span class=p>(),</span><span class=w> </span><span class=n>filename</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;dexFile: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>dexFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取 DexClassLoader 实例</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>DexClassLoader</span><span class=w> </span><span class=n>dexClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getDexClassLoader</span><span class=p>(</span><span class=n>dexFile</span><span class=p>.</span><span class=na>getPath</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 尝试从 dex 文件中加载指定的类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>loadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>loadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>dexClassLoader</span><span class=p>.</span><span class=na>loadClass</span><span class=p>(</span><span class=s>&#34;com.cztang.test.test01&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;loadClass test01 success&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>ClassNotFoundException</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Class test01 not found: &#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>return</span><span class=p>;</span><span class=w> </span><span class=c1>// 类未找到，直接返回</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取并反射调用 test01 类中的 testFunc 方法</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Method</span><span class=w> </span><span class=n>testFuncMethod</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>loadClass</span><span class=p>.</span><span class=na>getDeclaredMethod</span><span class=p>(</span><span class=s>&#34;testFunc&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Object</span><span class=w> </span><span class=n>obj</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>loadClass</span><span class=p>.</span><span class=na>newInstance</span><span class=p>();</span><span class=w> </span><span class=c1>// 需要先创建一个 test01 的实例</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>testFuncMethod</span><span class=p>.</span><span class=na>invoke</span><span class=p>(</span><span class=n>obj</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;testFunc method invoked successfully.&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>NoSuchMethodException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>IllegalAccessException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>InvocationTargetException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>InstantiationException</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Failed to invoke testFunc method: &#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 创建一个 DexClassLoader，用于加载指定的 dex 文件。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param dexfilepath 外部 dex 文件路径
+</span></span></span><span class=line><span class=cl><span class=cm>     * @return DexClassLoader 实例
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=nd>@NonNull</span><span class=w> </span><span class=n>DexClassLoader</span><span class=w> </span><span class=nf>getDexClassLoader</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>dexfilepath</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Context</span><span class=w> </span><span class=n>context</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>mainActivity</span><span class=p>.</span><span class=na>getApplicationContext</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 创建优化文件目录和库文件目录</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>optFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>context</span><span class=p>.</span><span class=na>getDir</span><span class=p>(</span><span class=s>&#34;opt_dex&#34;</span><span class=p>,</span><span class=w> </span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>libFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>context</span><span class=p>.</span><span class=na>getDir</span><span class=p>(</span><span class=s>&#34;lib_path&#34;</span><span class=p>,</span><span class=w> </span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取当前的 ClassLoader</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>currentClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>MainActivity</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getClassLoader</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 实例化 DexClassLoader，用于加载 dex 文件</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DexClassLoader</span><span class=p>(</span><span class=n>dexfilepath</span><span class=p>,</span><span class=w> </span><span class=n>optFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>(),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>libFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>(),</span><span class=w> </span><span class=n>currentClassLoader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 打印当前类加载器及其父类加载器的层次结构，直到根类加载器。
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>classLoadingOrder</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 获取当前 MainActivity 类的类加载器</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>thisClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>MainActivity</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getClassLoader</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 获取当前类加载器的父类加载器</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>assert</span><span class=w> </span><span class=n>thisClassLoader</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>parentClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>thisClassLoader</span><span class=p>.</span><span class=na>getParent</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 遍历类加载器的父级加载器，直到找到根类加载器</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=n>parentClassLoader</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;this: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>thisClassLoader</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=s>&#34; - - - parent: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>parentClassLoader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=c1>// 准备下一次循环所需的数据</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>thisClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>parentClassLoader</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>parentClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>parentClassLoader</span><span class=p>.</span><span class=na>getParent</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;root: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>thisClassLoader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>Exception</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Error during class loader traversal.&#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>下面就是上面加载的普通函数了，直接使用上面的代码就可以调用 <code>testFunc()</code> 函数，输出日志。这里注意下面是另外一个 app 的类，而由于 android sdk 的限制，只能生成多个 classes.dex 文件。而上述代码使用的是 <strong>classes3.dex</strong> 这个文件，自己写的相关类都在这个 dex 文件中。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.cztang.test</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.util.Log</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>test01</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>testFunc</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=s>&#34;loadClass&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;I am from test01.testFunc&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h2 id=壳的动态加载与修复 class=heading-element><span>壳的动态加载与修复</span>
+<a href=#%e5%a3%b3%e7%9a%84%e5%8a%a8%e6%80%81%e5%8a%a0%e8%bd%bd%e4%b8%8e%e4%bf%ae%e5%a4%8d class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>这里记录壳中 <code>Activity</code> 类的动态加载和修复过程。之所以需要修复，是因为我们一直通过 <code>DexClassLoader</code> 动态加载类，但它本身没有生命周期管理能力。之前的方法运行时无需生命周期支持，因为它只是一个普通的 Java 类方法，运行时只有一个界面。然而，当我们修改类使其继承 <code>AppCompatActivity</code> 或 <code>Activity</code> 后，它就变成了 Android 的一个组件类，需要完整的生命周期支持。因此，我们需要额外的机制来提供生命周期管理，从而产生了两种解决方法。</p><p>同时，在利用上面代码运行下面的 <code>testActivity</code> 类时，发现报错为 <code>Failed to invoke method</code>，查看错误栈信息后发现是 <code>NoSuchMethodException</code>，表明目标方法不存在。这说明 <code>DexClassLoader</code> 无法识别这种形式的 Dex 文件，导致动态加载失败。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.cztang.test</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.app.Activity</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.os.Bundle</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.util.Log</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 这里采用 AppCompatActivity 的话，第二种修复方式不可用，会报错 java.lang.ClassNotFoundException: Didn&#39;t find class &#34;com.cztang.test.testActivity&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// import androidx.appcompat.app.AppCompatActivity;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>testActivity</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Activity</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>protected</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span><span class=w> </span><span class=n>savedInstanceState</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=s>&#34;loadClass&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;I am from testActivity.onCreate&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>下面就是尝试替换 Android 应用程序中当前活动线程的类加载器。这通常用于插件化开发或热更新功能，允许应用程序在运行时加载和执行新的代码。下面的代码展示了两种方案，第一种就是反射替换，第二种就是反射插入，具体方案查看下面的两张图：</p><p><figure><a class=lightgallery href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203254.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203254.png?size=small" data-sub-html="<h2>20250223203254</h2>"><img loading=lazy src=https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203254.png alt=反射替换 srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203254.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203254.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203254.png?size=large 2x" data-title=20250223203254 style="background:url(/blog/images/loading.min.svg)no-repeat 50%" onload='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e);this.dataset.lazyloaded=""' onerror='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e)'></a><figcaption class=image-caption>反射替换</figcaption></figure></p><p><figure><a class=lightgallery href="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203453.png?size=large" data-thumbnail="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203453.png?size=small" data-sub-html="<h2>20250223203453</h2>"><img loading=lazy src=https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203453.png alt=反射插入 srcset="https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203453.png?size=small, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203453.png?size=medium 1.5x, https://nuthecz.oss-cn-hangzhou.aliyuncs.com/img/20250223203453.png?size=large 2x" data-title=20250223203453 style="background:url(/blog/images/loading.min.svg)no-repeat 50%" onload='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e);this.dataset.lazyloaded=""' onerror='this.title=this.dataset.title;for(const e of["style","data-title","onerror","onload"])this.removeAttribute(e)'></a><figcaption class=image-caption>反射插入</figcaption></figure></p><p>具体的代码如下所示，同时​这里如果存在报错 <code>FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?</code>，就需要对于 intent 增加标志，看 <a href=https://www.cnblogs.com/shaweng/archive/2012/06/29/2570394.html target=_blank rel="external nofollow noopener noreferrer">这篇文章</a>。同时注意可能会出现对于 xml 文件的报错，这个时候就需要在 <strong>AndroidManifest.xml</strong> 文件中新添加引用的组件类的 activity 标签，对于上面的测试代码就是：<code>&lt;activity android:name="com.cztang.test.testActivity">&lt;/activity></code>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.cztang.shell</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.content.Context</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.content.Intent</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.os.Environment</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.util.ArrayMap</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.util.Log</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>androidx.annotation.NonNull</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.io.File</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.lang.ref.WeakReference</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.lang.reflect.Field</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.lang.reflect.InvocationTargetException</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>java.lang.reflect.Method</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>dalvik.system.DexClassLoader</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>LoadActivityClass</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>TAG</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&#34;loadClass&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>MainActivity</span><span class=w> </span><span class=n>mainActivity</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 构造函数，初始化主活动引用</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>LoadActivityClass</span><span class=p>(</span><span class=n>MainActivity</span><span class=w> </span><span class=n>mMainActivity</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>mainActivity</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>mMainActivity</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 替换当前应用的类加载器为指定的类加载器。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param classloader 新的类加载器
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>replaceClassloader</span><span class=p>(</span><span class=n>ClassLoader</span><span class=w> </span><span class=n>classloader</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 获取 ActivityThread 类并获取当前的 ActivityThread 实例</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>activityThreadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Class</span><span class=p>.</span><span class=na>forName</span><span class=p>(</span><span class=s>&#34;android.app.ActivityThread&#34;</span><span class=p>,</span><span class=w> </span><span class=kc>false</span><span class=p>,</span><span class=w> </span><span class=n>classloader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Method</span><span class=w> </span><span class=n>currentActivityThreadMethod</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>activityThreadClass</span><span class=p>.</span><span class=na>getDeclaredMethod</span><span class=p>(</span><span class=s>&#34;currentActivityThread&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>currentActivityThreadMethod</span><span class=p>.</span><span class=na>setAccessible</span><span class=p>(</span><span class=kc>true</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Object</span><span class=w> </span><span class=n>activityThreadObj</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>currentActivityThreadMethod</span><span class=p>.</span><span class=na>invoke</span><span class=p>(</span><span class=kc>null</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 获取 ActivityThread 的 mPackages 字段，它管理着所有已加载包的信息</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Field</span><span class=w> </span><span class=n>mPackagesField</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>activityThreadClass</span><span class=p>.</span><span class=na>getDeclaredField</span><span class=p>(</span><span class=s>&#34;mPackages&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>mPackagesField</span><span class=p>.</span><span class=na>setAccessible</span><span class=p>(</span><span class=kc>true</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Object</span><span class=w> </span><span class=n>mPackagesObj</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>mPackagesField</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>activityThreadObj</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 根据当前应用的包名获取对应的 LoadedApk 的 WeakReference 对象</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Object</span><span class=w> </span><span class=n>weakReferenceObj</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>((</span><span class=n>ArrayMap</span><span class=p>)</span><span class=w> </span><span class=n>mPackagesObj</span><span class=p>).</span><span class=na>get</span><span class=p>(</span><span class=n>mainActivity</span><span class=p>.</span><span class=na>getPackageName</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Object</span><span class=w> </span><span class=n>loadApkObj</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>((</span><span class=n>WeakReference</span><span class=p>)</span><span class=w> </span><span class=n>weakReferenceObj</span><span class=p>).</span><span class=na>get</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 加载 LoadedApk 类并获取其 mClassLoader 字段</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>loadApkClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Class</span><span class=p>.</span><span class=na>forName</span><span class=p>(</span><span class=s>&#34;android.app.LoadedApk&#34;</span><span class=p>,</span><span class=w> </span><span class=kc>false</span><span class=p>,</span><span class=w> </span><span class=n>classloader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Field</span><span class=w> </span><span class=n>mClassloader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>loadApkClass</span><span class=p>.</span><span class=na>getDeclaredField</span><span class=p>(</span><span class=s>&#34;mClassLoader&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>mClassloader</span><span class=p>.</span><span class=na>setAccessible</span><span class=p>(</span><span class=kc>true</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 如果 LoadedApk 实例不为空，则替换其类加载器</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>loadApkObj</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>mClassloader</span><span class=p>.</span><span class=na>set</span><span class=p>(</span><span class=n>loadApkObj</span><span class=p>,</span><span class=w> </span><span class=n>classloader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=c1>// 如果 LoadedApk 实例为空，则记录错误信息，无法进行替换操作</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;loadApkObj is null, cannot replace ClassLoader.&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>ClassNotFoundException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>NoSuchMethodException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>InvocationTargetException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>IllegalAccessException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>NoSuchFieldException</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 异常处理：打印堆栈跟踪信息</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 使用第一种方法启动外部 dex 文件中的 Activity。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param filename 外部 dex 文件的文件名
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>startAcitivityFirstMethod</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>filename</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Context</span><span class=w> </span><span class=n>context</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>mainActivity</span><span class=p>.</span><span class=na>getApplicationContext</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>dexFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>File</span><span class=p>(</span><span class=n>Environment</span><span class=p>.</span><span class=na>getExternalStorageDirectory</span><span class=p>(),</span><span class=w> </span><span class=n>filename</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;dexFile: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>dexFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取 DexClassLoader 实例</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>DexClassLoader</span><span class=w> </span><span class=n>dexClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getCurrentDexClassLoader</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>dexFile</span><span class=p>.</span><span class=na>getPath</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 将应用的 ClassLoader 替换为 DexClassLoader，以便加载外部类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>replaceClassloader</span><span class=p>(</span><span class=n>dexClassLoader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 尝试从 dex 文件中加载指定的类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>loadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>loadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>dexClassLoader</span><span class=p>.</span><span class=na>loadClass</span><span class=p>(</span><span class=s>&#34;com.cztang.test.testActivity&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;First loadClass testActivity success&#34;</span><span class=p>);</span><span class=w> </span><span class=c1>// 加载成功时打印日志</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>ClassNotFoundException</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Class testActivity not found: &#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w> </span><span class=c1>// 类未找到时打印错误日志并返回</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>return</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 创建 Intent 并启动加载的类所对应的 Activity</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Intent</span><span class=w> </span><span class=n>intent</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Intent</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>loadClass</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>intent</span><span class=p>.</span><span class=na>addFlags</span><span class=p>(</span><span class=n>Intent</span><span class=p>.</span><span class=na>FLAG_ACTIVITY_NEW_TASK</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>context</span><span class=p>.</span><span class=na>startActivity</span><span class=p>(</span><span class=n>intent</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 使用第二种方法启动外部 dex 文件中的 Activity。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param filename 外部 dex 文件的文件名
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>startAcitivitySecondMethod</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>filename</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Context</span><span class=w> </span><span class=n>context</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>mainActivity</span><span class=p>.</span><span class=na>getApplicationContext</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>dexFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>File</span><span class=p>(</span><span class=n>Environment</span><span class=p>.</span><span class=na>getExternalStorageDirectory</span><span class=p>(),</span><span class=w> </span><span class=n>filename</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;dexFile: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>dexFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取 DexClassLoader 实例</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>DexClassLoader</span><span class=w> </span><span class=n>dexClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getParentDexClassLoader</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>dexFile</span><span class=p>.</span><span class=na>getPath</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 尝试从 dex 文件中加载指定的类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>loadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>loadClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>dexClassLoader</span><span class=p>.</span><span class=na>loadClass</span><span class=p>(</span><span class=s>&#34;com.cztang.test.testActivity&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Second loadClass testActivity success&#34;</span><span class=p>);</span><span class=w> </span><span class=c1>// 加载成功时打印日志</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>ClassNotFoundException</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Class testActivity not found: &#34;</span><span class=p>,</span><span class=w> </span><span class=n>e</span><span class=p>);</span><span class=w> </span><span class=c1>// 类未找到时打印错误日志并返回</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>return</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 创建 Intent 并启动加载的类所对应的 Activity</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Intent</span><span class=w> </span><span class=n>intent</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Intent</span><span class=p>(</span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>loadClass</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>intent</span><span class=p>.</span><span class=na>addFlags</span><span class=p>(</span><span class=n>Intent</span><span class=p>.</span><span class=na>FLAG_ACTIVITY_NEW_TASK</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>context</span><span class=p>.</span><span class=na>startActivity</span><span class=p>(</span><span class=n>intent</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 创建一个 DexClassLoader，其父类加载器为当前应用的父类加载器。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param context 应用上下文
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param dexfilepath 外部 dex 文件路径
+</span></span></span><span class=line><span class=cl><span class=cm>     * @return DexClassLoader 实例
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=nd>@NonNull</span><span class=w> </span><span class=n>DexClassLoader</span><span class=w> </span><span class=nf>getParentDexClassLoader</span><span class=p>(</span><span class=n>Context</span><span class=w> </span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>dexfilepath</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 创建优化文件目录和库文件目录</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>optFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>context</span><span class=p>.</span><span class=na>getDir</span><span class=p>(</span><span class=s>&#34;opt_dex&#34;</span><span class=p>,</span><span class=w> </span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>libFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>context</span><span class=p>.</span><span class=na>getDir</span><span class=p>(</span><span class=s>&#34;lib_path&#34;</span><span class=p>,</span><span class=w> </span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取当前的 ClassLoader 和其父 ClassLoader</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>pathClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>MainActivity</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getClassLoader</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>assert</span><span class=w> </span><span class=n>pathClassLoader</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>parentClassloader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>pathClassLoader</span><span class=p>.</span><span class=na>getParent</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 实例化 DexClassLoader，用于加载外部 dex 文件</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>DexClassLoader</span><span class=w> </span><span class=n>dexClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DexClassLoader</span><span class=p>(</span><span class=n>dexfilepath</span><span class=p>,</span><span class=w> </span><span class=n>optFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>(),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>libFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>(),</span><span class=w> </span><span class=n>parentClassloader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 设置 DexClassLoader 为当前应用 ClassLoader 的父 ClassLoader</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Field</span><span class=w> </span><span class=n>parentField</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>ClassLoader</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getDeclaredField</span><span class=p>(</span><span class=s>&#34;parent&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>parentField</span><span class=p>.</span><span class=na>setAccessible</span><span class=p>(</span><span class=kc>true</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>parentField</span><span class=p>.</span><span class=na>set</span><span class=p>(</span><span class=n>pathClassLoader</span><span class=p>,</span><span class=w> </span><span class=n>dexClassLoader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>NoSuchFieldException</span><span class=w> </span><span class=o>|</span><span class=w> </span><span class=n>IllegalAccessException</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>RuntimeException</span><span class=p>(</span><span class=n>e</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>dexClassLoader</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 创建一个 DexClassLoader，其父类加载器为当前应用的类加载器。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param context 应用上下文
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param dexfilepath 外部 dex 文件路径
+</span></span></span><span class=line><span class=cl><span class=cm>     * @return DexClassLoader 实例
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=nd>@NonNull</span><span class=w> </span><span class=n>DexClassLoader</span><span class=w> </span><span class=nf>getCurrentDexClassLoader</span><span class=p>(</span><span class=n>Context</span><span class=w> </span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>dexfilepath</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 创建优化文件目录和库文件目录</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>optFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>context</span><span class=p>.</span><span class=na>getDir</span><span class=p>(</span><span class=s>&#34;opt_dex&#34;</span><span class=p>,</span><span class=w> </span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>File</span><span class=w> </span><span class=n>libFile</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>context</span><span class=p>.</span><span class=na>getDir</span><span class=p>(</span><span class=s>&#34;lib_path&#34;</span><span class=p>,</span><span class=w> </span><span class=n>0</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 获取当前的 ClassLoader</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>currentClassLoader</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>MainActivity</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getClassLoader</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 实例化 DexClassLoader，用于加载 dex 文件</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>DexClassLoader</span><span class=p>(</span><span class=n>dexfilepath</span><span class=p>,</span><span class=w> </span><span class=n>optFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>(),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>libFile</span><span class=p>.</span><span class=na>getAbsolutePath</span><span class=p>(),</span><span class=w> </span><span class=n>currentClassLoader</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>下面就是调用的代码了，<strong>App 类加载器</strong> 和 <strong>壳的动态加载与修复</strong> 都有下面的代码所调用。同时这里采用了 <code>onRequestPermissionsResult</code> 函数，它是对于 Android 12 对于外部存储空间进行访问而额外添加的代码，当出现权限请求弹窗就会调用下面的代码，授权一次之后就不需要再调用了。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.cztang.shell</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.Manifest</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.content.pm.PackageManager</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.os.Bundle</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.util.Log</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>android.widget.TextView</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>androidx.appcompat.app.AppCompatActivity</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>androidx.core.app.ActivityCompat</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>androidx.core.content.ContextCompat</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>com.cztang.shell.databinding.ActivityMainBinding</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>MainActivity</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>AppCompatActivity</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>static</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>loadLibrary</span><span class=p>(</span><span class=s>&#34;shell&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>ActivityMainBinding</span><span class=w> </span><span class=n>binding</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>TAG</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&#34;loadClass&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>REQUEST_EXTERNAL_STORAGE</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>1</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>PERMISSIONS_STORAGE</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Manifest</span><span class=p>.</span><span class=na>permission</span><span class=p>.</span><span class=na>READ_EXTERNAL_STORAGE</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Manifest</span><span class=p>.</span><span class=na>permission</span><span class=p>.</span><span class=na>WRITE_EXTERNAL_STORAGE</span><span class=p>,};</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>protected</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span><span class=w> </span><span class=n>savedInstanceState</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>binding</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>ActivityMainBinding</span><span class=p>.</span><span class=na>inflate</span><span class=p>(</span><span class=n>getLayoutInflater</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>setContentView</span><span class=p>(</span><span class=n>binding</span><span class=p>.</span><span class=na>getRoot</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>TextView</span><span class=w> </span><span class=n>tv</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>binding</span><span class=p>.</span><span class=na>sampleText</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>tv</span><span class=p>.</span><span class=na>setText</span><span class=p>(</span><span class=n>stringFromJNI</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 检查应用是否具有写外部存储的权限</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>ContextCompat</span><span class=p>.</span><span class=na>checkSelfPermission</span><span class=p>(</span><span class=k>this</span><span class=p>,</span><span class=w> </span><span class=n>Manifest</span><span class=p>.</span><span class=na>permission</span><span class=p>.</span><span class=na>WRITE_EXTERNAL_STORAGE</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=o>==</span><span class=w> </span><span class=n>PackageManager</span><span class=p>.</span><span class=na>PERMISSION_GRANTED</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>loadClasses</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 如果权限未授予，请求权限</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>ActivityCompat</span><span class=p>.</span><span class=na>requestPermissions</span><span class=p>(</span><span class=k>this</span><span class=p>,</span><span class=w> </span><span class=n>PERMISSIONS_STORAGE</span><span class=p>,</span><span class=w> </span><span class=n>REQUEST_EXTERNAL_STORAGE</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>native</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>stringFromJNI</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 加载外部 dex 文件中的类并执行相关操作。
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>loadClasses</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>LoadCommonClass</span><span class=w> </span><span class=n>loadCommonClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LoadCommonClass</span><span class=p>(</span><span class=k>this</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>LoadActivityClass</span><span class=w> </span><span class=n>loadActivityClass</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LoadActivityClass</span><span class=p>(</span><span class=k>this</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 打印类加载器的层次结构</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>loadCommonClass</span><span class=p>.</span><span class=na>classLoadingOrder</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;LoadCommonClass -&gt; classLoadingOrder&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 加载并调用 classes3.dex 中的类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>loadCommonClass</span><span class=p>.</span><span class=na>loadDex</span><span class=p>(</span><span class=s>&#34;classes3.dex&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>i</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;LoadCommonClass -&gt; loadDex&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 使用第一种方法启动 classes4.dex 中的 Activity</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>loadActivityClass</span><span class=p>.</span><span class=na>startAcitivityFirstMethod</span><span class=p>(</span><span class=s>&#34;classes4.dex&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 使用第二种方法启动 classes4.dex 中的 Activity</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>loadActivityClass</span><span class=p>.</span><span class=na>startAcitivitySecondMethod</span><span class=p>(</span><span class=s>&#34;classes4.dex&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>     * 处理权限请求结果。
+</span></span></span><span class=line><span class=cl><span class=cm>     *
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param requestCode 请求权限时传入的唯一标识码
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param permissions 请求的所有权限的数组
+</span></span></span><span class=line><span class=cl><span class=cm>     * @param grantResults 每个权限请求结果的数组
+</span></span></span><span class=line><span class=cl><span class=cm>     */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>onRequestPermissionsResult</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>requestCode</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>permissions</span><span class=p>,</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=n>grantResults</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>super</span><span class=p>.</span><span class=na>onRequestPermissionsResult</span><span class=p>(</span><span class=n>requestCode</span><span class=p>,</span><span class=w> </span><span class=n>permissions</span><span class=p>,</span><span class=w> </span><span class=n>grantResults</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>requestCode</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>REQUEST_EXTERNAL_STORAGE</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// 检查权限请求结果</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>grantResults</span><span class=p>.</span><span class=na>length</span><span class=w> </span><span class=o>&gt;</span><span class=w> </span><span class=n>0</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>grantResults</span><span class=o>[</span><span class=n>0</span><span class=o>]</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>PackageManager</span><span class=p>.</span><span class=na>PERMISSION_GRANTED</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=c1>// 如果权限被授予，加载类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>loadClasses</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=c1>// 如果权限被拒绝，记录错误日志</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>Log</span><span class=p>.</span><span class=na>e</span><span class=p>(</span><span class=n>TAG</span><span class=p>,</span><span class=w> </span><span class=s>&#34;Permission denied&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>同时注意外部存储空间访问权限还需要在 <strong>AndroidManifest.xml</strong> 添加相关的定义，也就是下面的代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=c>&lt;!--读写权限--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;uses-permission</span> <span class=na>android:name=</span><span class=s>&#34;android.permission.MANAGE_EXTERNAL_STORAGE&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=na>tools:ignore=</span><span class=s>&#34;ScopedStorage&#34;</span> <span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;uses-permission</span> <span class=na>android:name=</span><span class=s>&#34;android.permission.READ_EXTERNAL_STORAGE&#34;</span> <span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;uses-permission</span> <span class=na>android:name=</span><span class=s>&#34;android.permission.WRITE_EXTERNAL_STORAGE&#34;</span> <span class=nt>/&gt;</span></span></span></code></pre></td></tr></table></div></div><p>最后注意上面的测试代码的继承的类为 Activity，对于这个继承类而言，两个修复方案都可以采用。而若是继承的是 AppCompatActivity，那么第二种修复方案就不能使用了，会报错找不到这个类。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="更新于 2025-02-23 19:27:39">更新于 2025.2.23&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md><span><a href="https://github.com/czTangt/blog.git/blob/main/content/posts%5candroid%5cShell.md?plain=1" title=查看源码 target=_blank rel="external nofollow noopener noreferrer" class=link-to-source>查看源码</a></span><span><a href=https://github.com/czTangt/blog.git/edit/main/content/posts%5candroid%5cShell.md title=编辑此页 target=_blank rel="external nofollow noopener noreferrer" class=link-to-edit>编辑此页</a></span><span><a href="https://github.com/czTangt/blog.git/issues/new?title=[BUG]%20Shell&amp;body=%7cField%7cValue%7c%0A%7c-%7c-%7c%0A%7cTitle%7cShell%7c%0A%7cURL%7chttps://czTangt.github.io/blog/posts/android/shell/%7c%0A%7cFilename%7chttps://github.com/czTangt/blog.git/blob/main/content/posts%5candroid%5cShell.md?plain=1%7c" title=报告问题 target=_blank rel="external nofollow noopener noreferrer" class=link-to-report>报告问题</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 X" data-sharer=twitter data-url=https://czTangt.github.io/blog/posts/android/shell/ data-title=Shell data-hashtags=android,reverse><i class="fa-brands fa-x-twitter fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://czTangt.github.io/blog/posts/android/shell/ data-hashtag=android><i class="fa-brands fa-facebook-square fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://czTangt.github.io/blog/posts/android/shell/ data-title=Shell><i class="fa-brands fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags fa-fw me-1" aria-hidden=true></i><a href=/blog/tags/android/ class=post-tag title="标签 - Android">Android</a><a href=/blog/tags/reverse/ class=post-tag title="标签 - Reverse">Reverse</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/blog/>主页</a></span></section></div><div class=post-nav><a href=/blog/posts/reverse/windows/ class=post-nav-item rel=prev title=Windows><i class="fa-solid fa-angle-left fa-fw" aria-hidden=true></i>Windows</a></div></div></article><aside class=toc id=toc-auto aria-label=目录><h2 class=toc-title>目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden=true></i></h2><div class=toc-content id=toc-content-auto></div></aside></main><footer class=footer><div class=footer-container><div class="footer-line powered order-1">由 <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.136.5"><img class=hugo-icon src=/blog/images/hugo.min.svg alt="Hugo logo"> Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/hugo-fixit/FixIt target=_blank rel=external title="FixIt v0.3.17-30a67c4b"><img class=fixit-icon src=/blog/images/fixit.min.svg alt="FixIt logo"> FixIt</a></div><div class="footer-line copyright order-2" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright fa-fw" aria-hidden=true></i>
+<span itemprop=copyrightYear>2024 - 2025</span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div class=widgets><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role=button aria-label=回到顶部><i class="fa-solid fa-arrow-up fa-fw" aria-hidden=true></i><span class="variant-numeric d-none">0%</span></div></div><a href=https://github.com/czTangt/blog title="View source on GitHub" target=_blank rel="external nofollow" class="github-corner left d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentcolor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentcolor" class="octo-body"/></svg></a><div id=mask></div><noscript><div class=noscript-warning>该网站在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/blog/lib/lightgallery/css/lightgallery-bundle.min.css><link rel=preload href=/blog/lib/katex/katex.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/katex/katex.min.css></noscript><link rel=stylesheet href=/blog/lib/cookieconsent/cookieconsent.min.css><script src=/blog/lib/autocomplete/autocomplete.min.js defer></script><script src=/blog/lib/fuse/fuse.min.js defer></script><script src=/blog/lib/lightgallery/lightgallery.min.js defer></script><script src=/blog/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js defer></script><script src=/blog/lib/lightgallery/plugins/zoom/lg-zoom.min.js defer></script><script src=/blog/lib/sharer/sharer.min.js async defer></script><script src=/blog/lib/katex/katex.min.js defer></script><script src=/blog/lib/katex/auto-render.min.js defer></script><script src=/blog/lib/katex/mhchem.min.js defer></script><script src=/blog/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/blog/js/codeblock.js defer></script><script src=https://libs.baidu.com/jquery/2.1.4/jquery.min.js defer></script><script>window.config={code:{copyTitle:"复制到剪贴板",editLockTitle:"锁定可编辑代码块",editUnLockTitle:"解锁可编辑代码块",editable:!0,maxShownLines:10},comment:{enable:!1},cookieconsent:{content:{dismiss:"同意",link:"了解更多",message:"本网站使用 Cookies 来改善您的浏览体验。"},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{distance:100,findAllMatches:!1,fuseIndexURL:"/blog/search.json",highlightTag:"em",ignoreFieldNorm:!1,ignoreLocation:!1,isCaseSensitive:!1,location:0,maxResultLength:10,minMatchCharLength:2,noResultsFound:"没有找到结果",snippetLength:30,threshold:.3,type:"fuse",useExtendedSearch:!1},version:"v0.3.17-30a67c4b"}</script><script src=/blog/js/theme.min.js defer></script></body></html>
